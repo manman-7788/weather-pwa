@@ -28,25 +28,27 @@ jobs:
               if (!fs.existsSync('./data')) fs.mkdirSync('./data');
               fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
 
+              // 计算并保存今天的数据（每次运行都更新当天的记录）
               const now = new Date();
-              const bjHour = (now.getUTCHours() + 8) % 24;
-              if (bjHour === 23 && now.getUTCMinutes() >= 50) {
-                const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
-                const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
-                const rec = {
-                  m: now.getUTCMonth() + 1, d: now.getUTCDate(),
-                  avgTemp: Number(avg.toFixed(1)),
-                  minTemp: Number(d.tempchart[0].min_temp),
-                  maxTemp: Number(d.tempchart[0].max_temp),
-                  rain: Number(d.passedchart.reduce((a,c)=>a+(c.rain1h||0),0).toFixed(1)),
-                  maxWind: Number(Math.max(...d.passedchart.map(p=>p.wind_speed||0)).toFixed(1))
-                };
-                let history = [];
-                if (fs.existsSync('./data/history.json')) history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
-                const idx = history.findIndex(h => h.m === rec.m && h.d === rec.d);
-                if (idx >= 0) history[idx] = rec; else history.push(rec);
-                fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
-              }
+              const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
+              const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
+              
+              const rec = {
+                m: now.getUTCMonth() + 1,
+                d: now.getUTCDate(),
+                avgTemp: Number(avg.toFixed(1)),
+                minTemp: Number(d.tempchart[0].min_temp),
+                maxTemp: Number(d.tempchart[0].max_temp),
+                rain: Number(d.passedchart.reduce((a,c)=>a+(c.rain1h||0),0).toFixed(1)),
+                maxWind: Number(Math.max(...d.passedchart.map(p=>p.wind_speed||0)).toFixed(1))
+              };
+              let history = [];
+              if (fs.existsSync('./data/history.json')) history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
+              
+              const idx = history.findIndex(h => h.m === rec.m && h.d === rec.d);
+              if (idx >= 0) history[idx] = rec; else history.push(rec);
+              
+              fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
             } catch(e) { console.log(e); }
           }
           run();
