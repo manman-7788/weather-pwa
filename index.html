@@ -184,7 +184,12 @@ function renderTheme(){root.setAttribute('data-theme',themeMode==='auto'?(new Da
 themeBtn.addEventListener('click',()=>{themeMode=MODES[(MODES.indexOf(themeMode)+1)%3];localStorage.setItem(THEME_KEY,themeMode);renderTheme();});
 renderTheme();setInterval(()=>{if(themeMode==='auto')renderTheme();},60000);
 
-const formatTemp=v=>v==null||v==='--'?'--':Number(v).toFixed(1).replace('.','<span class="dot">.</span>');
+// 纯文本格式化，供 textContent 使用
+const formatTempPlain = v => v == null || v === '--' ? '--' : Number(v).toFixed(1);
+
+// 带 HTML 的格式化，供 innerHTML 使用
+const formatTemp = v => v == null || v === '--' ? '--' : Number(v).toFixed(1).replace('.','<span class="dot">.</span>');
+
 const icon=n=>`<svg viewBox="0 0 24 24"><use href="#i-${n}"/></svg>`;
 let forecastData={central:[],dongguan:[]},currentForecastSource='central';
 
@@ -219,7 +224,7 @@ function deepNum(obj, fallback = null) {
   if (!isNaN(num) && num !== 9999) return num;
   if (typeof obj === 'object') {
     for (let k in obj) {
-      if (['temperature', 'temp', 'value', 'max_temp', 'min_temp', 'high', 'low'].includes(k)) {
+      if (['temperature', 'temp', 'value', 'max_temp', 'min_temp', 'high', 'low', 'wind_speed', 'windSpeed'].includes(k)) {
         const res = deepNum(obj[k], null);
         if (res !== null) return res;
       }
@@ -249,7 +254,8 @@ function renderPastData(pts){
     const t = deepNum(p.temperature, null);
     const h = deepNum(p.humidity, 0);
     const r = deepNum(p.rain1h, 0);
-    const w = deepNum(p.wind_speed, 0);
+    // 风速字段兼容处理
+    const w = deepNum(p.wind_speed, null) ?? deepNum(p.windSpeed, 0);
 
     if(t !== null && t > -50 && t < 60) {
       if(t > extractedMax) extractedMax = t;
@@ -368,20 +374,19 @@ async function loadData(){
       renderHourly(recent.map((p,i)=>({t:i===0?'现在':p.time.slice(11,16),icon:'cloud',temp:deepNum(p.temperature,0)})));
     }
 
-    // 提取官方极值
     let officialMax = null, officialMin = null;
     if (data.tempchart && data.tempchart.length > 0) {
       officialMax = deepNum(data.tempchart[0].max_temp, null);
       officialMin = deepNum(data.tempchart[0].min_temp, null);
     }
 
-    // 渲染实况极值（大字）和官方预报（小字）
     document.getElementById('todayMax').innerHTML = formatTemp(window._extractedMax === -99 ? '--' : window._extractedMax) + '°';
     document.getElementById('todayMin').innerHTML = formatTemp(window._extractedMin === 99 ? '--' : window._extractedMin) + '°';
     document.getElementById('todayMaxWind').innerHTML = (window._maxWind || 0).toFixed(1) + ' <span style="font-size:12px;font-weight:normal">m/s</span>';
     
-    document.getElementById('todayMaxForecast').textContent = officialMax !== null ? '预报: ' + formatTemp(officialMax) + '°' : '预报: --';
-    document.getElementById('todayMinForecast').textContent = officialMin !== null ? '预报: ' + formatTemp(officialMin) + '°' : '预报: --';
+    // 关键修复：这里使用纯文本格式化
+    document.getElementById('todayMaxForecast').textContent = officialMax !== null ? '预报: ' + formatTempPlain(officialMax) + '°' : '预报: --';
+    document.getElementById('todayMinForecast').textContent = officialMin !== null ? '预报: ' + formatTempPlain(officialMin) + '°' : '预报: --';
     
   }catch(e){
     console.warn("数据加载失败", e);
@@ -389,7 +394,6 @@ async function loadData(){
   }
 }
 
-// 读取广东应急气象数据
 async function loadDg121(){
   try {
     const res = await fetch(`./data/dongguan.json?t=` + new Date().getTime());
