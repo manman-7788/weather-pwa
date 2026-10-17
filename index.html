@@ -62,7 +62,7 @@
   .data-table th,.data-table td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--line);border-right:1px solid var(--line);min-width:44px;}
   .data-table .sticky-col{position:sticky;left:0;background:var(--table-header-bg);font-weight:500;color:var(--ink-2);border-right:2px solid var(--line);}
   .data-table thead th{background:var(--table-header-bg);color:var(--ink-3);font-weight:normal;}
-  .chart-container{padding:12px 10px;border-top:1px solid var(--line);}#pastChart{width:100%;height:110px;display:block;}
+  .chart-container{padding:12px 10px;border-top:1px solid var(--line); position:relative;}#pastChart{width:100%;height:120px;display:block;}
   .chart-text-row{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:6px;}
   .year-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;scrollbar-width:none;}
   .year-tab{flex:0 0 auto;padding:6px 12px;border-radius:99px;font-size:12px;background:var(--card);border:1px solid var(--card-line);color:var(--ink-2);cursor:pointer;}
@@ -157,7 +157,7 @@
           </table>
         </div>
         <div class="chart-container">
-          <svg id="pastChart" viewBox="0 0 100 60" preserveAspectRatio="none"></svg>
+          <svg id="pastChart" viewBox="0 0 100 70" preserveAspectRatio="none"></svg>
           <div class="chart-text-row"><span id="rainText">-</span><span id="windText">-</span></div>
         </div>
       </div>
@@ -184,14 +184,11 @@ function renderTheme(){root.setAttribute('data-theme',themeMode==='auto'?(new Da
 themeBtn.addEventListener('click',()=>{themeMode=MODES[(MODES.indexOf(themeMode)+1)%3];localStorage.setItem(THEME_KEY,themeMode);renderTheme();});
 renderTheme();setInterval(()=>{if(themeMode==='auto')renderTheme();},60000);
 
-// 纯文本格式化，供 textContent 使用
 const formatTempPlain = v => v == null || v === '--' ? '--' : Number(v).toFixed(1);
-
-// 带 HTML 的格式化，供 innerHTML 使用
 const formatTemp = v => v == null || v === '--' ? '--' : Number(v).toFixed(1).replace('.','<span class="dot">.</span>');
-
 const icon=n=>`<svg viewBox="0 0 24 24"><use href="#i-${n}"/></svg>`;
 let forecastData={central:[],dongguan:[]},currentForecastSource='central';
+let todayRealData = null; // 保存今日实况用于历史记录合并
 
 function renderNow(now){document.getElementById('tempNum').innerHTML=formatTemp(now.temp);document.getElementById('feels').innerHTML=formatTemp(now.feels)+'°';document.getElementById('humidity').textContent=now.humidity+'%';document.getElementById('weatherDesc').textContent=now.text;document.getElementById('wind').textContent=now.wind;const d=new Date();document.getElementById('updatedAt').textContent=`更新于 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;document.getElementById('todayDate').textContent=`${d.getMonth()+1}月${d.getDate()}日`;}
 function renderHourly(h){document.getElementById('hourly').innerHTML=h.map((x,i)=>`<div class="hour ${i===0?'now':''}"><div class="hour-t">${x.t}</div>${icon(x.icon)}<div class="hour-deg">${formatTemp(x.temp)}°</div></div>`).join('');}
@@ -254,7 +251,6 @@ function renderPastData(pts){
     const t = deepNum(p.temperature, null);
     const h = deepNum(p.humidity, 0);
     const r = deepNum(p.rain1h, 0);
-    // 风速字段兼容处理
     const w = deepNum(p.wind_speed, null) ?? deepNum(p.windSpeed, 0);
 
     if(t !== null && t > -50 && t < 60) {
@@ -275,11 +271,67 @@ function renderPastData(pts){
   window._extractedMax = extractedMax;
   window._extractedMin = extractedMin;
   window._maxWind = maxW;
+  
+  // 计算实况日平均温（取 02,08,14,20 时的均值，如果没这 4 个点，就用整体均值近似）
+  const pts4 = pts.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
+  const avgT = pts4.length === 4 ? (pts4.reduce((a,c)=>a+deepNum(c.temperature,0),0) / 4) : (pts.reduce((a,c)=>a+deepNum(c.temperature,0),0) / pts.length);
+  
+  todayRealData = {
+    m: new Date().getMonth() + 1,
+    d: new Date().getDate(),
+    avgTemp: Number(avgT.toFixed(1)),
+    minTemp: extractedMin,
+    maxTemp: extractedMax,
+    rain: Number(pts.reduce((a,c)=>a+deepNum(c.rain1h,0),0).toFixed(1)),
+    maxWind: maxW
+  };
 
-  const svg=document.getElementById('pastChart'),temps=pts.map(p=>deepNum(p.temperature,null)||0),rains=pts.map(p=>deepNum(p.rain1h,0)),mn=Math.min(...temps),mx=Math.max(...temps),sp=mx-mn||1,mr=Math.max(...rains,0.1);
-  const points=pts.map((p,i)=>({x:(i/(pts.length-1))*100,y:40-(((deepNum(p.temperature,null)||mn)-mn)/sp)*30,r:deepNum(p.rain1h,0)}));
-  const poly=points.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '),bars=points.map(p=>`<rect x="${(p.x-1.2).toFixed(1)}" y="${(58-(p.r/mr)*14).toFixed(1)}" width="2.4" height="${((p.r/mr)*14).toFixed(1)}" fill="#6aa9ff" opacity="0.8"/>`).join('');
-  svg.innerHTML=`<defs><linearGradient id="tF" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff9b6a" stop-opacity="0.3"/><stop offset="100%" stop-color="#ff9b6a" stop-opacity="0"/></linearGradient></defs><polygon points="${points[0].x},40 ${poly} ${points[points.length-1].x},40" fill="url(#tF)"/><polyline points="${poly}" fill="none" stroke="#ff9b6a" stroke-width="1.6"/>${bars}`;
+  // 重新绘制带有数值标签的折线图
+  const svg=document.getElementById('pastChart');
+  const temps = pts.map(p=>deepNum(p.temperature,null)||0);
+  const rains = pts.map(p=>deepNum(p.rain1h,0));
+  const mn = Math.min(...temps), mx = Math.max(...temps), sp = mx - mn || 1;
+  const mr = Math.max(...rains, 0.1);
+  const W = 100, H = 70, tempTop = 15, tempBottom = 45, rainTop = 50, rainBottom = 68;
+
+  const points = pts.map((p,i)=>({ 
+    x:(i/(pts.length-1))*W, 
+    y: tempBottom - (((deepNum(p.temperature,null)||mn) - mn) / sp) * (tempBottom - tempTop),
+    r: deepNum(p.rain1h,0),
+    val: deepNum(p.temperature,null),
+    label: p.time ? p.time.slice(11,16) : ''
+  }));
+
+  const poly = points.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  const bars = points.map(p=>`<rect x="${(p.x-1.2).toFixed(1)}" y="${(rainBottom-(p.r/mr)*(rainBottom-rainTop)).toFixed(1)}" width="2.4" height="${((p.r/mr)*(rainBottom-rainTop)).toFixed(1)}" fill="#6aa9ff" opacity="0.8"/>`).join('');
+
+  // 生成数据标签：每隔3个点显示，或者最高/最低点显示
+  let labels = '';
+  points.forEach((p, i) => {
+    const isMax = p.val === extractedMax;
+    const isMin = p.val === extractedMin;
+    if (i % 4 === 0 || isMax || isMin) {
+      if (p.val !== null) {
+        // 为了避免文字挤在一起，根据是否极值调整 Y 轴偏移
+        const labelY = isMax ? p.y - 4 : (isMin ? p.y + 7 : p.y - 3);
+        const labelColor = isMax ? '#ef4444' : (isMin ? '#3b82f6' : 'var(--ink-3)');
+        labels += `<text x="${p.x}" y="${labelY}" font-size="4.5" fill="${labelColor}" text-anchor="middle" font-family="sans-serif">${p.val.toFixed(1)}</text>`;
+      }
+    }
+  });
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="tF" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ff9b6a" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#ff9b6a" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <polygon points="${points[0].x},${tempBottom} ${poly} ${points[points.length-1].x},${tempBottom}" fill="url(#tF)"/>
+    <polyline points="${poly}" fill="none" stroke="#ff9b6a" stroke-width="1.2"/>
+    ${bars}
+    ${labels}
+  `;
   
   document.getElementById('rainText').textContent=rains.reduce((a,b)=>a+b,0)===0?'过去24小时无降水':'下方柱状为降水';
   document.getElementById('windText').textContent=`最高风速: ${maxW.toFixed(1)} m/s`;
@@ -313,8 +365,27 @@ function initYear(){
   renderYearTable();
 }
 function renderYearTable(){
-  const tb=document.getElementById('yearTbody'),dt=allYearData.filter(d=>d.m===currentYearMonth),cm={spring:'var(--season-spring)',summer:'var(--season-summer)',autumn:'var(--season-autumn)',winter:'var(--season-winter)'};
-  tb.innerHTML=dt.map(d=>`<tr><td>${d.m}月${d.d}日</td><td><span style="color:${cm[d.season]};font-weight:600;">${d.avgTemp.toFixed(1)}</span></td><td class="val-min">${d.minTemp.toFixed(1)}</td><td class="val-max">${d.maxTemp.toFixed(1)}</td><td class="${d.rain>0?'val-rain':'val-no-rain'}">${d.rain.toFixed(1)}</td><td>${(d.maxWind||0).toFixed(1)}</td></tr>`).join('');
+  const tb=document.getElementById('yearTbody');
+  
+  // 动态合并今天的最新实况（防止机器人还没跑，或者数据不同步）
+  let displayData = [...allYearData];
+  if (todayRealData) {
+    const existIdx = displayData.findIndex(d => d.m === todayRealData.m && d.d === todayRealData.d);
+    if (existIdx >= 0) {
+      displayData[existIdx] = todayRealData;
+    } else {
+      displayData.push(todayRealData);
+    }
+    displayData = processHistoryData(displayData); // 重新计算季节
+  }
+
+  const dt=displayData.filter(d=>d.m===currentYearMonth),cm={spring:'var(--season-spring)',summer:'var(--season-summer)',autumn:'var(--season-autumn)',winter:'var(--season-winter)'};
+  if(dt.length === 0) {
+    tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--ink-3); padding:20px;">暂无数据</td></tr>`;
+    return;
+  }
+  
+  tb.innerHTML=dt.map(d=>`<tr><td>${d.m}月${d.d}日</td><td><span style="color:${cm[d.season]};font-weight:600;">${formatTempPlain(d.avgTemp)}</span></td><td class="val-min">${formatTempPlain(d.minTemp)}</td><td class="val-max">${formatTempPlain(d.maxTemp)}</td><td class="${d.rain>0?'val-rain':'val-no-rain'}">${formatTempPlain(d.rain)}</td><td>${formatTempPlain(d.maxWind||0)}</td></tr>`).join('');
 }
 
 async function loadData(){
@@ -384,9 +455,10 @@ async function loadData(){
     document.getElementById('todayMin').innerHTML = formatTemp(window._extractedMin === 99 ? '--' : window._extractedMin) + '°';
     document.getElementById('todayMaxWind').innerHTML = (window._maxWind || 0).toFixed(1) + ' <span style="font-size:12px;font-weight:normal">m/s</span>';
     
-    // 关键修复：这里使用纯文本格式化
     document.getElementById('todayMaxForecast').textContent = officialMax !== null ? '预报: ' + formatTempPlain(officialMax) + '°' : '预报: --';
     document.getElementById('todayMinForecast').textContent = officialMin !== null ? '预报: ' + formatTempPlain(officialMin) + '°' : '预报: --';
+
+    renderYearTable(); // 获取到今日实况后，刷新全年记录表
     
   }catch(e){
     console.warn("数据加载失败", e);
@@ -422,7 +494,7 @@ async function loadHistory(){
     renderYearTable();
   }catch(e){
     allYearData = [];
-    document.getElementById('yearTbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--ink-3); padding:20px;">正在积累数据中。<br>每天深夜机器人会自动记录当天的数据，请耐心等待几天。</td></tr>`;
+    renderYearTable();
   }
 }
 
