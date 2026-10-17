@@ -106,9 +106,21 @@
       <div class="metric"><div class="m-label">湿度</div><div class="m-value" id="humidity">--</div></div>
       <div class="metric"><div class="m-label">风力</div><div class="m-value" id="wind">--</div></div>
     </section>
+    
     <section class="block">
       <h2>逐小时</h2><div class="hourly" id="hourly"></div>
     </section>
+
+    <!-- 今日极值模块 -->
+    <section class="block">
+      <h2>今日极值</h2>
+      <div class="metrics">
+        <div class="metric"><div class="m-label">最高温</div><div class="m-value val-max" id="todayMax">--</div></div>
+        <div class="metric"><div class="m-label">最低温</div><div class="m-value val-min" id="todayMin">--</div></div>
+        <div class="metric"><div class="m-label">最大风速</div><div class="m-value" id="todayMaxWind">--</div></div>
+      </div>
+    </section>
+
     <section class="block">
       <h2>未来 7 天预报</h2>
       <div class="source-toggle">
@@ -117,6 +129,7 @@
       </div>
       <div class="daily" id="daily"></div>
     </section>
+    
     <section class="block">
       <h2>过去 24 小时实况</h2>
       <div class="table-card">
@@ -194,6 +207,7 @@ function renderPastData(pts){
   
   document.getElementById('rainText').textContent=rains.reduce((a,b)=>a+b,0)===0?'过去24小时无降水':'下方柱状为降水';
   document.getElementById('windText').textContent=`最高风速: ${mw.toFixed(1)} m/s`;
+  document.getElementById('todayMaxWind').innerHTML = mw.toFixed(1) + ' <span style="font-size:12px;font-weight:normal">m/s</span>';
 }
 
 let allYearData=[],currentYearMonth=new Date().getMonth()+1;
@@ -228,13 +242,13 @@ function renderYearTable(){
   tb.innerHTML=dt.map(d=>`<tr><td>${d.m}月${d.d}日</td><td><span style="color:${cm[d.season]};font-weight:600;">${d.avgTemp.toFixed(1)}</span></td><td class="val-min">${d.minTemp.toFixed(1)}</td><td class="val-max">${d.maxTemp.toFixed(1)}</td><td class="${d.rain>0?'val-rain':'val-no-rain'}">${d.rain.toFixed(1)}</td><td>${(d.maxWind||0).toFixed(1)}</td></tr>`).join('');
 }
 
-// 直接读取同域名下的 JSON
 async function loadData(){
   try{
     const res = await fetch(`./data/current.json?t=` + new Date().getTime());
     if(!res.ok) throw new Error('404');
     const data = await res.json();
     
+    // 实况
     if(data.real && data.real.weather) {
       const w = data.real.weather;
       renderNow({
@@ -245,10 +259,30 @@ async function loadData(){
         wind: data.real.wind.direct + data.real.wind.power
       });
     }
+    // 极值
+    if (data.tempchart && data.tempchart.length > 0) {
+      document.getElementById('todayMax').innerHTML = formatTemp(data.tempchart[0].max_temp) + '°';
+      document.getElementById('todayMin').innerHTML = formatTemp(data.tempchart[0].min_temp) + '°';
+    }
+    
+    // 7天预报 (加了更强容错)
     if(data.predict && data.predict.detail){
-      forecastData.central=data.predict.detail.map((d,i)=>({d:i===0?'今天':d.date.slice(5),icon:'cloud',text:d.day.info,min:d.night.temperature,max:d.day.temperature}));
+      forecastData.central=data.predict.detail.map((d,i)=>{
+        const day = d.day || {};
+        const night = d.night || {};
+        // 有时候叫info，有时候叫weather
+        const txt = day.info || day.weather || '多云'; 
+        return {
+          d: i===0?'今天':d.date.slice(5),
+          icon: 'cloud',
+          text: txt,
+          min: night.temperature || '--',
+          max: day.temperature || '--'
+        };
+      });
       if(currentForecastSource==='central')renderDaily(forecastData.central);
     }
+    // 24小时
     if(data.passedchart){
       renderPastData(data.passedchart);
       const recent=data.passedchart.slice(-8).reverse();
@@ -270,11 +304,15 @@ async function loadHistory(){
   try{
     const res=await fetch(`./data/history.json?t=` + new Date().getTime());
     if(!res.ok) throw new Error('404');
-    allYearData=processHistoryData(await res.json());
+    const raw = await res.json();
+    if(!raw || raw.length === 0) throw new Error('empty');
+    
+    allYearData=processHistoryData(raw);
     renderYearTable();
   }catch(e){
-    allYearData=processHistoryData(Array.from({length:30},(_,i)=>({m:currentYearMonth,d:i+1,avgTemp:25,minTemp:20,maxTemp:30,rain:0,maxWind:2})));
-    renderYearTable();
+    // 没有数据时不显示假数据，直接提示
+    allYearData = [];
+    document.getElementById('yearTbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--ink-3); padding:20px;">正在积累数据中。<br>每天深夜机器人会自动记录当天的数据，请耐心等待几天。</td></tr>`;
   }
 }
 
