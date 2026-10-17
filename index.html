@@ -111,7 +111,6 @@
       <h2>逐小时</h2><div class="hourly" id="hourly"></div>
     </section>
 
-    <!-- 今日极值模块 -->
     <section class="block">
       <h2>今日极值</h2>
       <div class="metrics">
@@ -178,7 +177,7 @@ let forecastData={central:[],dongguan:[]},currentForecastSource='central';
 
 function renderNow(now){document.getElementById('tempNum').innerHTML=formatTemp(now.temp);document.getElementById('feels').innerHTML=formatTemp(now.feels)+'°';document.getElementById('humidity').textContent=now.humidity+'%';document.getElementById('weatherDesc').textContent=now.text;document.getElementById('wind').textContent=now.wind;const d=new Date();document.getElementById('updatedAt').textContent=`更新于 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;document.getElementById('todayDate').textContent=`${d.getMonth()+1}月${d.getDate()}日`;}
 function renderHourly(h){document.getElementById('hourly').innerHTML=h.map((x,i)=>`<div class="hour ${i===0?'now':''}"><div class="hour-t">${x.t}</div>${icon(x.icon)}<div class="hour-deg">${formatTemp(x.temp)}°</div></div>`).join('');}
-function renderDaily(daily){if(!daily||!daily.length)return;const mn=Math.min(...daily.map(d=>d.min)),mx=Math.max(...daily.map(d=>d.max)),sp=mx-mn||1;document.getElementById('daily').innerHTML=daily.map(d=>`<div class="day"><div class="day-name">${d.d}</div>${icon(d.icon)}<div class="day-text">${d.text}</div><div class="day-min">${formatTemp(d.min)}°</div><div class="tempbar"><i style="left:${((d.min-mn)/sp)*100}%;width:${((d.max-d.min)/sp)*100}%"></i></div><div class="day-max">${formatTemp(d.max)}°</div></div>`).join('');}
+function renderDaily(daily){if(!daily||!daily.length)return;const validTemps = daily.map(d=>d.min).concat(daily.map(d=>d.max)).filter(v=>!isNaN(v) && v!=null);const mn=Math.min(...validTemps)||20,mx=Math.max(...validTemps)||30,sp=mx-mn||1;document.getElementById('daily').innerHTML=daily.map(d=>`<div class="day"><div class="day-name">${d.d}</div>${icon(d.icon)}<div class="day-text">${d.text}</div><div class="day-min">${formatTemp(d.min)}°</div><div class="tempbar"><i style="left:${((d.min-mn)/sp)*100}%;width:${((d.max-d.min)/sp)*100}%"></i></div><div class="day-max">${formatTemp(d.max)}°</div></div>`).join('');}
 
 document.querySelectorAll('.source-btn').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.source-btn').forEach(x=>x.classList.remove('active'));
@@ -186,6 +185,23 @@ document.querySelectorAll('.source-btn').forEach(b=>b.addEventListener('click',(
   currentForecastSource=b.dataset.source;
   renderDaily(forecastData[currentForecastSource]);
 }));
+
+// 数据提取清理工具
+function safeNum(val, fallback = 0) {
+  if (val === null || val === undefined) return fallback;
+  if (typeof val === 'object') {
+    val = val.value || val.temperature || val.temp || val.max_temp || val.min_temp || fallback;
+  }
+  const n = Number(val);
+  return isNaN(n) ? fallback : n;
+}
+function safeStr(val, fallback = '多云') {
+  if (val === null || val === undefined) return fallback;
+  if (typeof val === 'object') {
+    val = val.weather || val.info || val.text || val.name;
+  }
+  return String(val) || fallback;
+}
 
 function renderPastData(pts){
   if(!pts||pts.length<2)return;
@@ -259,33 +275,39 @@ async function loadData(){
         wind: data.real.wind.direct + data.real.wind.power
       });
     }
+    
     // 极值
     if (data.tempchart && data.tempchart.length > 0) {
-      document.getElementById('todayMax').innerHTML = formatTemp(data.tempchart[0].max_temp) + '°';
-      document.getElementById('todayMin').innerHTML = formatTemp(data.tempchart[0].min_temp) + '°';
+      document.getElementById('todayMax').innerHTML = formatTemp(safeNum(data.tempchart[0].max_temp)) + '°';
+      document.getElementById('todayMin').innerHTML = formatTemp(safeNum(data.tempchart[0].min_temp)) + '°';
     }
     
-    // 7天预报 (加了更强容错)
+    // 7天预报（超强容错解析版）
     if(data.predict && data.predict.detail){
-      forecastData.central=data.predict.detail.map((d,i)=>{
-        const day = d.day || {};
-        const night = d.night || {};
-        // 有时候叫info，有时候叫weather
-        const txt = day.info || day.weather || '多云'; 
+      forecastData.central = data.predict.detail.map((d,i) => {
+        let day = d.day || {};
+        let night = d.night || {};
         return {
-          d: i===0?'今天':d.date.slice(5),
+          d: i===0 ? '今天' : (d.date ? d.date.slice(5) : ''),
           icon: 'cloud',
-          text: txt,
-          min: night.temperature || '--',
-          max: day.temperature || '--'
+          text: safeStr(day.weather || day.info || '多云'),
+          min: safeNum(night.temperature || night.temp, 25),
+          max: safeNum(day.temperature || day.temp, 30)
         };
       });
       if(currentForecastSource==='central')renderDaily(forecastData.central);
     }
-    // 24小时
+    
+    // 24小时实况（强制时间正序：从早到晚）
     if(data.passedchart){
-      renderPastData(data.passedchart);
-      const recent=data.passedchart.slice(-8).reverse();
+      let pts = data.passedchart.slice();
+      pts.sort((a, b) => new Date(a.time.replace(/-/g, '/')) - new Date(b.time.replace(/-/g, '/')));
+      const last24 = pts.slice(-24);
+      
+      renderPastData(last24);
+      
+      // 逐小时模块保留最近的8条，并将“现在”放在最左侧
+      const recent = last24.slice(-8).reverse();
       renderHourly(recent.map((p,i)=>({t:i===0?'现在':p.time.slice(11,16),icon:'cloud',temp:p.temperature})));
     }
   }catch(e){
@@ -310,7 +332,6 @@ async function loadHistory(){
     allYearData=processHistoryData(raw);
     renderYearTable();
   }catch(e){
-    // 没有数据时不显示假数据，直接提示
     allYearData = [];
     document.getElementById('yearTbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--ink-3); padding:20px;">正在积累数据中。<br>每天深夜机器人会自动记录当天的数据，请耐心等待几天。</td></tr>`;
   }
