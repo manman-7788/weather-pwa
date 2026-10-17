@@ -49,8 +49,6 @@
   .hour-t{font-size:11px;color:var(--ink-3);}.hour svg{width:24px;height:24px;margin:11px auto 9px;stroke:var(--ink-2);fill:none;}
   .hour-deg{font-size:14px;font-weight:600;}
   
-  /* 删除了 source-toggle 相关样式 */
-  
   .daily{background:var(--card);border:1px solid var(--card-line);border-radius:22px;padding:6px 16px;}
   .day{display:grid;grid-template-columns:44px 24px 52px 40px 1fr 40px;align-items:center;gap:6px;padding:13px 0;border-bottom:1px solid var(--line);}
   .day:last-child{border-bottom:0;}.day-name{font-size:13px;}.day svg{width:22px;height:22px;stroke:var(--ink-3);fill:none;}
@@ -71,22 +69,14 @@
   .year-table td{padding:10px 2px;text-align:center;border-bottom:1px solid var(--line);}
   .val-max{color:#ef4444;}.val-min{color:#3b82f6;}.val-rain{color:var(--accent-1);font-weight:600;}.val-no-rain{color:var(--ink-4);}
   
-  /* 雷达图容器样式 */
-  .radar-container {
-    background: var(--card); 
-    border: 1px solid var(--card-line); 
-    border-radius: 22px; 
-    overflow: hidden;
-    padding: 10px;
-  }
-  .radar-container iframe {
-    display: block;
-    width: 100%;
-    height: 320px;
-    border: none;
-    border-radius: 12px;
-    background: #1a1a1a;
-  }
+  .radar-container {background: var(--card); border: 1px solid var(--card-line); border-radius: 22px; overflow: hidden; padding: 10px;}
+  .radar-container iframe, .radar-container img {display: block; width: 100%; height: 320px; border: none; border-radius: 12px; background: #1a1a1a; object-fit: contain;}
+  
+  /* 切换按钮样式 */
+  .source-toggle{display:flex;justify-content:center;gap:8px;margin-bottom:12px;}
+  .source-btn{padding:6px 16px;border-radius:99px;font-size:12px;background:var(--card);border:1px solid var(--card-line);color:var(--ink-2);cursor:pointer;}
+  .source-btn.active{background:var(--accent-1);color:#fff;border-color:transparent;font-weight:600;}
+  
   footer{margin-top:26px;text-align:center;font-size:11px;color:var(--ink-4);}
 </style>
 </head>
@@ -150,21 +140,40 @@
       </div>
     </section>
 
-    <!-- 未来7天预报（取消数据源切换） -->
     <section class="block">
       <h2>未来 7 天预报</h2>
       <div class="daily" id="daily"></div>
     </section>
 
-    <!-- 新增：气象雷达回波图 -->
+    <!-- 双雷达切换 -->
     <section class="block">
-      <h2>气象雷达回波 (东莞)</h2>
+      <h2>气象雷达回波</h2>
+      <div class="source-toggle">
+        <div class="source-btn active" data-radar="dg">东莞精细雷达</div>
+        <div class="source-btn" data-radar="hn">华南区域雷达</div>
+      </div>
+      
       <div class="radar-container">
-        <!-- 嵌入 Windy 动态雷达图，中心点定在东莞 (113.75, 23.04) -->
-        <iframe 
-          src="https://embed.windy.com/embed2.html?lat=23.04&lon=113.75&zoom=8&level=surface&overlay=radar&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=23.04&detailLon=113.75&metricWind=default&metricTemp=default&radarRange=-1" 
-          allowfullscreen>
-        </iframe>
+        <!-- 东莞雷达 -->
+        <div id="radar-dg" style="display:block;">
+          <img id="dg-radar-img" src="./data/dongguan_radar.gif?t=0" 
+               alt="东莞精细雷达回波图" 
+               onerror="this.style.display='none'; document.getElementById('dg-radar-error').style.display='block';">
+          <div id="dg-radar-error" style="display:none; text-align:center; padding:60px 20px; color:var(--ink-3); font-size:13px;">
+            雷达图正在更新中，请稍后刷新...
+          </div>
+          <div style="text-align:center; font-size:10px; color:var(--ink-4); margin-top:8px;">
+            数据来源：东莞市气象局
+          </div>
+        </div>
+        
+        <!-- 华南雷达 -->
+        <div id="radar-hn" style="display:none;">
+          <iframe src="http://www.nmc.cn/publish/radar/huanan.html" allowfullscreen></iframe>
+          <div style="text-align:center; font-size:10px; color:var(--ink-4); margin-top:8px;">
+            数据来源：中央气象台
+          </div>
+        </div>
       </div>
     </section>
     
@@ -200,10 +209,32 @@
         </div>
       </div>
     </section>
-    <footer>数据来源：中央气象台 · 雷达图：Windy · 仅供个人使用</footer>
+    <footer>数据来源：中央气象台 / 东莞气象局 · 仅供个人使用</footer>
   </div>
 </div>
 <script>
+// 雷达切换逻辑
+document.querySelectorAll('.source-btn[data-radar]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.source-btn[data-radar]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const type = btn.dataset.radar;
+    
+    document.getElementById('radar-dg').style.display = type === 'dg' ? 'block' : 'none';
+    document.getElementById('radar-hn').style.display = type === 'hn' ? 'block' : 'none';
+    
+    // 切换回东莞时，强制刷新图片缓存
+    if (type === 'dg') {
+      const img = document.getElementById('dg-radar-img');
+      if (img) {
+        img.style.display = 'block';
+        document.getElementById('dg-radar-error').style.display = 'none';
+        img.src = './data/dongguan_radar.gif?t=' + Date.now();
+      }
+    }
+  });
+});
+
 const THEME_KEY='dg-weather-theme',MODES=['auto','day','night'],root=document.documentElement,themeBtn=document.getElementById('themeBtn');
 let themeMode=localStorage.getItem(THEME_KEY)||'auto';
 function renderTheme(){root.setAttribute('data-theme',themeMode==='auto'?(new Date().getHours()>=6&&new Date().getHours()<18?'day':'night'):themeMode);const i={auto:'auto',day:'sun',night:'moon'};themeBtn.innerHTML=`<svg viewBox="0 0 24 24"><use href="#i-${i[themeMode]}"/></svg>`;}
