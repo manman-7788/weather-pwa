@@ -40,8 +40,9 @@
   .hero-art svg{width:46px;height:46px;stroke:var(--icon-warm);fill:none;stroke-width:1.5;}
   .desc{margin-top:14px;font-size:18px;font-weight:600;}.updated{margin-top:4px;font-size:11.5px;color:var(--ink-3);}
   .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px;}
-  .metric{background:var(--card);border:1px solid var(--card-line);border-radius:18px;padding:13px 10px;text-align:center;}
+  .metric{background:var(--card);border:1px solid var(--card-line);border-radius:18px;padding:13px 10px;text-align:center;position:relative;}
   .m-label{font-size:10.5px;color:var(--ink-3);}.m-value{margin-top:7px;font-size:15px;font-weight:600;}
+  .m-sub{font-size:10px; color:var(--ink-3); margin-top:4px; font-weight:normal;}
   .block{margin-top:26px;}.block h2{margin:0 0 11px 4px;font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:1.1px;}
   .hourly{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;}
   .hour{flex:0 0 auto;min-width:68px;padding:15px 8px;border-radius:20px;background:var(--card);border:1px solid var(--card-line);text-align:center;}
@@ -112,11 +113,23 @@
     </section>
 
     <section class="block">
-      <h2>过去 24 小时极值</h2>
+      <h2>极值对比</h2>
       <div class="metrics">
-        <div class="metric"><div class="m-label">最高温</div><div class="m-value val-max" id="todayMax">--</div></div>
-        <div class="metric"><div class="m-label">最低温</div><div class="m-value val-min" id="todayMin">--</div></div>
-        <div class="metric"><div class="m-label">最大风速</div><div class="m-value" id="todayMaxWind">--</div></div>
+        <div class="metric">
+          <div class="m-label">最高温</div>
+          <div class="m-value val-max" id="todayMax">--</div>
+          <div class="m-sub" id="todayMaxForecast">预报: --</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">最低温</div>
+          <div class="m-value val-min" id="todayMin">--</div>
+          <div class="m-sub" id="todayMinForecast">预报: --</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">最大风速</div>
+          <div class="m-value" id="todayMaxWind">--</div>
+          <div class="m-sub">实况统计</div>
+        </div>
       </div>
     </section>
 
@@ -206,7 +219,7 @@ function deepNum(obj, fallback = null) {
   if (!isNaN(num) && num !== 9999) return num;
   if (typeof obj === 'object') {
     for (let k in obj) {
-      if (['temperature', 'temp', 'value', 'max_temp', 'min_temp', 'high', 'low', 'maxTemp', 'minTemp'].includes(k)) {
+      if (['temperature', 'temp', 'value', 'max_temp', 'min_temp', 'high', 'low'].includes(k)) {
         const res = deepNum(obj[k], null);
         if (res !== null) return res;
       }
@@ -221,7 +234,6 @@ function deepStr(obj, fallback = '多云') {
     if (obj.weather) return deepStr(obj.weather, fallback);
     if (obj.info) return deepStr(obj.info, fallback);
     if (obj.text) return deepStr(obj.text, fallback);
-    if (obj.weatherDesc) return deepStr(obj.weatherDesc, fallback);
   }
   return fallback;
 }
@@ -231,20 +243,22 @@ function renderPastData(pts){
   const th=document.getElementById('tableHead'),trT=document.getElementById('rowTemp'),trH=document.getElementById('rowHum'),trR=document.getElementById('rowRain'),trW=document.getElementById('rowWind');
   let hH='<th class="sticky-col">时间</th>',hT='<td class="sticky-col">温度</td>',hHu='<td class="sticky-col">湿度</td>',hR='<td class="sticky-col">降水</td>',hW='<td class="sticky-col">风速</td>';
   
-  let maxT = -99, minT = 99, maxW = 0;
+  let extractedMax = -99, extractedMin = 99, maxW = 0;
 
   pts.forEach(p=>{
-    const t = deepNum(p.temperature, 0);
+    const t = deepNum(p.temperature, null);
     const h = deepNum(p.humidity, 0);
     const r = deepNum(p.rain1h, 0);
     const w = deepNum(p.wind_speed, 0);
 
-    if(t > maxT) maxT = t;
-    if(t < minT && t > -50) minT = t;
+    if(t !== null && t > -50 && t < 60) {
+      if(t > extractedMax) extractedMax = t;
+      if(t < extractedMin) extractedMin = t;
+    }
     if(w > maxW) maxW = w;
 
     hH+=`<th>${p.time?p.time.slice(11,16):'--'}</th>`;
-    hT+=`<td>${t.toFixed(1)}</td>`;
+    hT+=`<td>${t!==null?t.toFixed(1):'--'}</td>`;
     hHu+=`<td>${h.toFixed(0)}</td>`;
     hR+=`<td style="color:${r>0?'var(--accent-1)':'inherit'}">${r.toFixed(1)}</td>`;
     hW+=`<td>${w.toFixed(1)}</td>`;
@@ -252,12 +266,12 @@ function renderPastData(pts){
   
   th.innerHTML=hH;trT.innerHTML=hT;trH.innerHTML=hHu;trR.innerHTML=hR;trW.innerHTML=hW;
   
-  document.getElementById('todayMax').innerHTML = formatTemp(maxT) + '°';
-  document.getElementById('todayMin').innerHTML = formatTemp(minT) + '°';
-  document.getElementById('todayMaxWind').innerHTML = maxW.toFixed(1) + ' <span style="font-size:12px;font-weight:normal">m/s</span>';
+  window._extractedMax = extractedMax;
+  window._extractedMin = extractedMin;
+  window._maxWind = maxW;
 
-  const svg=document.getElementById('pastChart'),temps=pts.map(p=>deepNum(p.temperature,0)),rains=pts.map(p=>deepNum(p.rain1h,0)),mn=Math.min(...temps),mx=Math.max(...temps),sp=mx-mn||1,mr=Math.max(...rains,0.1);
-  const points=pts.map((p,i)=>({x:(i/(pts.length-1))*100,y:40-(((deepNum(p.temperature,0))-mn)/sp)*30,r:deepNum(p.rain1h,0)}));
+  const svg=document.getElementById('pastChart'),temps=pts.map(p=>deepNum(p.temperature,null)||0),rains=pts.map(p=>deepNum(p.rain1h,0)),mn=Math.min(...temps),mx=Math.max(...temps),sp=mx-mn||1,mr=Math.max(...rains,0.1);
+  const points=pts.map((p,i)=>({x:(i/(pts.length-1))*100,y:40-(((deepNum(p.temperature,null)||mn)-mn)/sp)*30,r:deepNum(p.rain1h,0)}));
   const poly=points.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '),bars=points.map(p=>`<rect x="${(p.x-1.2).toFixed(1)}" y="${(58-(p.r/mr)*14).toFixed(1)}" width="2.4" height="${((p.r/mr)*14).toFixed(1)}" fill="#6aa9ff" opacity="0.8"/>`).join('');
   svg.innerHTML=`<defs><linearGradient id="tF" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff9b6a" stop-opacity="0.3"/><stop offset="100%" stop-color="#ff9b6a" stop-opacity="0"/></linearGradient></defs><polygon points="${points[0].x},40 ${poly} ${points[points.length-1].x},40" fill="url(#tF)"/><polyline points="${poly}" fill="none" stroke="#ff9b6a" stroke-width="1.6"/>${bars}`;
   
@@ -353,6 +367,22 @@ async function loadData(){
       const recent = last24.slice(-8).reverse();
       renderHourly(recent.map((p,i)=>({t:i===0?'现在':p.time.slice(11,16),icon:'cloud',temp:deepNum(p.temperature,0)})));
     }
+
+    // 提取官方极值
+    let officialMax = null, officialMin = null;
+    if (data.tempchart && data.tempchart.length > 0) {
+      officialMax = deepNum(data.tempchart[0].max_temp, null);
+      officialMin = deepNum(data.tempchart[0].min_temp, null);
+    }
+
+    // 渲染实况极值（大字）和官方预报（小字）
+    document.getElementById('todayMax').innerHTML = formatTemp(window._extractedMax === -99 ? '--' : window._extractedMax) + '°';
+    document.getElementById('todayMin').innerHTML = formatTemp(window._extractedMin === 99 ? '--' : window._extractedMin) + '°';
+    document.getElementById('todayMaxWind').innerHTML = (window._maxWind || 0).toFixed(1) + ' <span style="font-size:12px;font-weight:normal">m/s</span>';
+    
+    document.getElementById('todayMaxForecast').textContent = officialMax !== null ? '预报: ' + formatTemp(officialMax) + '°' : '预报: --';
+    document.getElementById('todayMinForecast').textContent = officialMin !== null ? '预报: ' + formatTemp(officialMin) + '°' : '预报: --';
+    
   }catch(e){
     console.warn("数据加载失败", e);
     document.getElementById('weatherDesc').textContent = "等待数据更新...";
@@ -372,7 +402,6 @@ async function loadDg121(){
     }
   } catch(e) {
     console.warn("广东应急气象数据获取失败，尝试回退到中央气象台");
-    // 如果新数据源失败，直接用中央气象台的数据顶上，并标注
     forecastData.dongguan = forecastData.central.map(d => ({...d, text: d.text + '(粤)'}));
   }
   if(currentForecastSource==='dongguan')renderDaily(forecastData.dongguan);
