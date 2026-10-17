@@ -69,22 +69,8 @@
   .year-table td{padding:10px 2px;text-align:center;border-bottom:1px solid var(--line);}
   .val-max{color:#ef4444;}.val-min{color:#3b82f6;}.val-rain{color:var(--accent-1);font-weight:600;}.val-no-rain{color:var(--ink-4);}
   
-  /* Windy 雷达图容器 */
-  .radar-container {
-    background: var(--card); 
-    border: 1px solid var(--card-line); 
-    border-radius: 22px; 
-    overflow: hidden;
-    padding: 10px;
-  }
-  .radar-container iframe {
-    display: block;
-    width: 100%;
-    height: 320px;
-    border: none;
-    border-radius: 12px;
-    background: #1a1a1a;
-  }
+  .radar-container {background: var(--card); border: 1px solid var(--card-line); border-radius: 22px; overflow: hidden; padding: 10px;}
+  .radar-container iframe {display: block; width: 100%; height: 320px; border: none; border-radius: 12px; background: #1a1a1a;}
   footer{margin-top:26px;text-align:center;font-size:11px;color:var(--ink-4);}
 </style>
 </head>
@@ -127,6 +113,28 @@
       <h2>逐小时</h2><div class="hourly" id="hourly"></div>
     </section>
 
+    <!-- 新增：空气质量模块 -->
+    <section class="block">
+      <h2>空气质量</h2>
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">AQI</div>
+          <div class="m-value" id="aqiValue">--</div>
+          <div class="m-sub" id="aqiLevel">--</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">PM2.5</div>
+          <div class="m-value" id="pm25Value">--</div>
+          <div class="m-sub">μg/m³</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">PM10</div>
+          <div class="m-value" id="pm10Value">--</div>
+          <div class="m-sub">μg/m³</div>
+        </div>
+      </div>
+    </section>
+
     <section class="block">
       <h2>极值对比</h2>
       <div class="metrics">
@@ -148,26 +156,6 @@
       </div>
     </section>
 
-<!-- 空气质量 -->
-<section class="block" id="aqiBlock">
-  <h2>空气质量</h2>
-  <div class="metrics">
-    <div class="metric">
-      <div class="m-label">AQI</div>
-      <div class="m-value" id="aqiValue">--</div>
-      <div class="m-sub" id="aqiLevel">--</div>
-    </div>
-    <div class="metric">
-      <div class="m-label">PM2.5</div>
-      <div class="m-value" id="pm25Value">--</div>
-    </div>
-    <div class="metric">
-      <div class="m-label">PM10</div>
-      <div class="m-value" id="pm10Value">--</div>
-    </div>
-  </div>
-</section>
-    
     <section class="block">
       <h2>未来 7 天预报</h2>
       <div class="daily" id="daily"></div>
@@ -487,6 +475,19 @@ async function loadData(){
     
     document.getElementById('todayMaxForecast').textContent = officialMax !== null ? '预报: ' + formatTempPlain(officialMax) + '°' : '预报: --';
     document.getElementById('todayMinForecast').textContent = officialMin !== null ? '预报: ' + formatTempPlain(officialMin) + '°' : '预报: --';
+
+    // 解析空气质量数据
+    if (data.aqi && data.aqi.aqi) {
+        document.getElementById('aqiValue').textContent = data.aqi.aqi || '--';
+        document.getElementById('aqiLevel').textContent = data.aqi.aq || '--';
+        document.getElementById('pm25Value').textContent = data.aqi.pm25 || '--';
+        document.getElementById('pm10Value').textContent = data.aqi.pm10 || '--';
+    } else if (data.air && data.air.aqi) {
+        document.getElementById('aqiValue').textContent = data.air.aqi || '--';
+        document.getElementById('aqiLevel').textContent = data.air.aq || '--';
+        document.getElementById('pm25Value').textContent = data.air.pm25 || '--';
+        document.getElementById('pm10Value').textContent = data.air.pm10 || '--';
+    }
 
     renderYearTable();
     
