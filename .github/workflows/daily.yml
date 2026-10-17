@@ -1,15 +1,18 @@
 name: Fetch Weather Data
+
 on:
   schedule:
-    - cron: '*/30 * * * *' # 每 30 分钟运行一次
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '18'
       - name: Run fetch script
@@ -18,28 +21,20 @@ jobs:
           const fs = require('fs');
           async function run() {
             try {
-              // 1. 抓取实况和预报
               const r = await fetch('https://www.nmc.cn/rest/weather?stationid=cqsJg');
               const json = await r.json();
               const d = json.data;
-              
               if(!d) return;
-              
-              // 保存实况数据
               if (!fs.existsSync('./data')) fs.mkdirSync('./data');
               fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
 
-              // 2. 每天晚上 23:50 存档历史数据
               const now = new Date();
-              // 注意 GitHub Actions 跑在 UTC 时间，北京时间需要 +8 小时
               const bjHour = (now.getUTCHours() + 8) % 24;
-              
               if (bjHour === 23 && now.getUTCMinutes() >= 50) {
                 const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
                 const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
                 const rec = {
-                  m: now.getUTCMonth() + 1,
-                  d: now.getUTCDate(),
+                  m: now.getUTCMonth() + 1, d: now.getUTCDate(),
                   avgTemp: Number(avg.toFixed(1)),
                   minTemp: Number(d.tempchart[0].min_temp),
                   maxTemp: Number(d.tempchart[0].max_temp),
@@ -47,9 +42,7 @@ jobs:
                   maxWind: Number(Math.max(...d.passedchart.map(p=>p.wind_speed||0)).toFixed(1))
                 };
                 let history = [];
-                if (fs.existsSync('./data/history.json')) {
-                  history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
-                }
+                if (fs.existsSync('./data/history.json')) history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
                 const idx = history.findIndex(h => h.m === rec.m && h.d === rec.d);
                 if (idx >= 0) history[idx] = rec; else history.push(rec);
                 fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
