@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-18 02:35",
+    "publish_time": "2026-10-18 02:40",
     "weather": {
       "temperature": 25.5,
       "temperatureDiff": 0.1,
       "airpressure": 9999,
       "humidity": 83,
       "rain": 0,
-      "rcomfort": 72,
+      "rcomfort": 71,
       "icomfort": 1,
       "info": "晴",
       "img": "0",
-      "feelst": 29
+      "feelst": 28.9
     },
     "wind": {
       "direct": "东北风",
-      "degree": 65,
+      "degree": 68,
       "power": "微风",
-      "speed": 1.5
+      "speed": 1.6
     },
     "warn": {
       "alert": "9999",
