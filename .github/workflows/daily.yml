@@ -1,8 +1,8 @@
-name: Fetch Daily Weather
+name: Fetch Weather Data
 on:
   schedule:
-    - cron: '50 15 * * *' # 每天北京时间 23:50 运行
-  workflow_dispatch: # 允许手动点击运行
+    - cron: '*/30 * * * *' # 每 30 分钟运行一次
+  workflow_dispatch:
 
 jobs:
   fetch:
@@ -12,33 +12,48 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - name: Fetch and Save
+      - name: Run fetch script
         run: |
           node -e "
           const fs = require('fs');
           async function run() {
             try {
+              // 1. 抓取实况和预报
               const r = await fetch('https://www.nmc.cn/rest/weather?stationid=cqsJg');
-              const d = (await r.json()).data;
-              const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
-              const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
-              const rec = {
-                m: new Date().getMonth() + 1,
-                d: new Date().getDate(),
-                avgTemp: Number(avg.toFixed(1)),
-                minTemp: Number(d.tempchart[0].min_temp),
-                maxTemp: Number(d.tempchart[0].max_temp),
-                rain: Number(d.passedchart.reduce((a,c)=>a+(c.rain1h||0),0).toFixed(1)),
-                maxWind: Number(Math.max(...d.passedchart.map(p=>p.wind_speed||0)).toFixed(1))
-              };
-              let history = [];
-              if (fs.existsSync('./data/history.json')) {
-                history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
-              }
-              const idx = history.findIndex(h => h.m === rec.m && h.d === rec.d);
-              if (idx >= 0) history[idx] = rec; else history.push(rec);
+              const json = await r.json();
+              const d = json.data;
+              
+              if(!d) return;
+              
+              // 保存实况数据
               if (!fs.existsSync('./data')) fs.mkdirSync('./data');
-              fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
+              fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
+
+              // 2. 每天晚上 23:50 存档历史数据
+              const now = new Date();
+              // 注意 GitHub Actions 跑在 UTC 时间，北京时间需要 +8 小时
+              const bjHour = (now.getUTCHours() + 8) % 24;
+              
+              if (bjHour === 23 && now.getUTCMinutes() >= 50) {
+                const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
+                const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
+                const rec = {
+                  m: now.getUTCMonth() + 1,
+                  d: now.getUTCDate(),
+                  avgTemp: Number(avg.toFixed(1)),
+                  minTemp: Number(d.tempchart[0].min_temp),
+                  maxTemp: Number(d.tempchart[0].max_temp),
+                  rain: Number(d.passedchart.reduce((a,c)=>a+(c.rain1h||0),0).toFixed(1)),
+                  maxWind: Number(Math.max(...d.passedchart.map(p=>p.wind_speed||0)).toFixed(1))
+                };
+                let history = [];
+                if (fs.existsSync('./data/history.json')) {
+                  history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
+                }
+                const idx = history.findIndex(h => h.m === rec.m && h.d === rec.d);
+                if (idx >= 0) history[idx] = rec; else history.push(rec);
+                fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
+              }
             } catch(e) { console.log(e); }
           }
           run();
@@ -47,6 +62,6 @@ jobs:
         run: |
           git config --global user.name 'Auto-Bot'
           git config --global user.email 'bot@example.com'
-          git add data/history.json
+          git add data/
           git commit -m "Update weather data" || exit 0
           git push
