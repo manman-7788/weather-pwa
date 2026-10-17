@@ -15,41 +15,83 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
+      - name: Install dependencies
+        run: npm install cheerio
       - name: Run fetch script
         run: |
           node -e "
           const fs = require('fs');
+          const cheerio = require('cheerio');
+          
           async function run() {
+            if (!fs.existsSync('./data')) fs.mkdirSync('./data');
+            
+            // 1. 抓取中央气象台
             try {
               const r = await fetch('https://www.nmc.cn/rest/weather?stationid=cqsJg');
-              const json = await r.json();
-              const d = json.data;
-              if(!d) return;
-              if (!fs.existsSync('./data')) fs.mkdirSync('./data');
-              fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
+              const d = (await r.json()).data;
+              if(d) {
+                fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
+                
+                const now = new Date();
+                const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
+                const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
+                const rec = {
+                  m: now.getUTCMonth() + 1, d: now.getUTCDate(),
+                  avgTemp: Number(avg.toFixed(1)),
+                  minTemp: Number(d.tempchart[0].min_temp),
+                  maxTemp: Number(d.tempchart[0].max_temp),
+                  rain: Number(d.passedchart.reduce((a,c)=>a+(c.rain1h||0),0).toFixed(1)),
+                  maxWind: Number(Math.max(...d.passedchart.map(p=>p.wind_speed||0)).toFixed(1))
+                };
+                let history = [];
+                if (fs.existsSync('./data/history.json')) history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
+                const idx = history.findIndex(h => h.m === rec.m && h.d === rec.d);
+                if (idx >= 0) history[idx] = rec; else history.push(rec);
+                fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
+              }
+            } catch(e) { console.log('NMC error', e); }
 
-              // 计算并保存今天的数据（每次运行都更新当天的记录）
-              const now = new Date();
-              const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
-              const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
+            // 2. 抓取东莞气象台 (dg121.com)
+            try {
+              const rDg = await fetch('https://www.dg121.com/Jcw/', {
+                headers: {
+                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                  'Accept-Language': 'zh-CN,zh;q=0.9'
+                }
+              });
+              const html = await rDg.text();
+              const $ = cheerio.load(html);
               
-              const rec = {
-                m: now.getUTCMonth() + 1,
-                d: now.getUTCDate(),
-                avgTemp: Number(avg.toFixed(1)),
-                minTemp: Number(d.tempchart[0].min_temp),
-                maxTemp: Number(d.tempchart[0].max_temp),
-                rain: Number(d.passedchart.reduce((a,c)=>a+(c.rain1h||0),0).toFixed(1)),
-                maxWind: Number(Math.max(...d.passedchart.map(p=>p.wind_speed||0)).toFixed(1))
-              };
-              let history = [];
-              if (fs.existsSync('./data/history.json')) history = JSON.parse(fs.readFileSync('./data/history.json', 'utf8'));
+              // 试着找包含镇街的表格
+              let dgForecast = [];
+              // 在网页中查找包含“厚街”或者“东莞”表格行
+              // 官网结构一般是：<tr><td>镇街</td><td>日期</td><td>天气</td>...</tr>
+              // 但网页多变，我们用更暴力的正则查找包含“℃”的字眼
+              const matches = html.match(/(\d{1,2})[℃|C]~(\d{1,2})[℃|C]/g) || [];
+              const texts = html.match(/(晴|多云|阴|阵雨|雷阵雨|大雨|中雨|小雨)/g) || [];
               
-              const idx = history.findIndex(h => h.m === rec.m && h.d === rec.d);
-              if (idx >= 0) history[idx] = rec; else history.push(rec);
-              
-              fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
-            } catch(e) { console.log(e); }
+              // 如果页面里有真实的预报数据（找到至少7组气温），我们就认为抓取成功
+              if (matches.length >= 7) {
+                 for (let i = 0; i < 7; i++) {
+                   let tempRange = matches[i].split('~');
+                   let minT = tempRange[0].replace(/[℃|C]/g, '');
+                   let maxT = tempRange[1].replace(/[℃|C]/g, '');
+                   dgForecast.push({
+                     d: i === 0 ? '今天' : '周' + '日一二三四五六'[new Date(Date.now() + i*86400000).getDay()],
+                     icon: 'cloud',
+                     text: texts[i] || '多云',
+                     min: Number(minT),
+                     max: Number(maxT)
+                   });
+                 }
+                 fs.writeFileSync('./data/dongguan.json', JSON.stringify(dgForecast, null, 2));
+                 console.log('东莞气象台抓取成功');
+              } else {
+                 console.log('未在页面中找到合适的天气数据格式');
+              }
+            } catch(e) { console.log('DG121 error', e); }
           }
           run();
           "
