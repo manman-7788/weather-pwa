@@ -69,10 +69,31 @@
   .year-table td{padding:10px 2px;text-align:center;border-bottom:1px solid var(--line);}
   .val-max{color:#ef4444;}.val-min{color:#3b82f6;}.val-rain{color:var(--accent-1);font-weight:600;}.val-no-rain{color:var(--ink-4);}
   
+  /* 雷达图容器样式 */
   .radar-container {background: var(--card); border: 1px solid var(--card-line); border-radius: 22px; overflow: hidden; padding: 10px;}
-  .radar-container iframe, .radar-container img {display: block; width: 100%; height: 320px; border: none; border-radius: 12px; background: #1a1a1a; object-fit: contain;}
   
-  /* 切换按钮样式 */
+  /* 纯图片雷达 */
+  .radar-container img {display: block; width: 100%; height: 320px; border: none; border-radius: 12px; background: #1a1a1a; object-fit: contain;}
+  
+  /* 裁剪版 iframe 雷达 */
+  .iframe-wrapper {
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 12px;
+    background: #111;
+  }
+  .iframe-wrapper iframe {
+    position: absolute;
+    width: 1300px; /* 把网页拉宽，避免响应式变成手机版 */
+    height: 900px;
+    top: -110px; /* 向上偏移，切掉顶部的导航栏 */
+    left: calc(50% - 650px); /* 居中 */
+    border: none;
+    pointer-events: auto;
+  }
+  
   .source-toggle{display:flex;justify-content:center;gap:8px;margin-bottom:12px;}
   .source-btn{padding:6px 16px;border-radius:99px;font-size:12px;background:var(--card);border:1px solid var(--card-line);color:var(--ink-2);cursor:pointer;}
   .source-btn.active{background:var(--accent-1);color:#fff;border-color:transparent;font-weight:600;}
@@ -167,9 +188,11 @@
           </div>
         </div>
         
-        <!-- 华南雷达 -->
+        <!-- 华南雷达（CSS裁切版） -->
         <div id="radar-hn" style="display:none;">
-          <iframe src="http://www.nmc.cn/publish/radar/huanan.html" allowfullscreen></iframe>
+          <div class="iframe-wrapper">
+            <iframe src="http://www.nmc.cn/publish/radar/huanan.html" scrolling="no" allowfullscreen></iframe>
+          </div>
           <div style="text-align:center; font-size:10px; color:var(--ink-4); margin-top:8px;">
             数据来源：中央气象台
           </div>
