@@ -48,9 +48,9 @@
   .hour{flex:0 0 auto;min-width:68px;padding:15px 8px;border-radius:20px;background:var(--card);border:1px solid var(--card-line);text-align:center;}
   .hour-t{font-size:11px;color:var(--ink-3);}.hour svg{width:24px;height:24px;margin:11px auto 9px;stroke:var(--ink-2);fill:none;}
   .hour-deg{font-size:14px;font-weight:600;}
-  .source-toggle{display:flex;justify-content:center;gap:8px;margin-bottom:12px;}
-  .source-btn{padding:6px 16px;border-radius:99px;font-size:12px;background:var(--card);border:1px solid var(--card-line);color:var(--ink-2);cursor:pointer;}
-  .source-btn.active{background:var(--accent-1);color:#fff;border-color:transparent;font-weight:600;}
+  
+  /* 删除了 source-toggle 相关样式 */
+  
   .daily{background:var(--card);border:1px solid var(--card-line);border-radius:22px;padding:6px 16px;}
   .day{display:grid;grid-template-columns:44px 24px 52px 40px 1fr 40px;align-items:center;gap:6px;padding:13px 0;border-bottom:1px solid var(--line);}
   .day:last-child{border-bottom:0;}.day-name{font-size:13px;}.day svg{width:22px;height:22px;stroke:var(--ink-3);fill:none;}
@@ -70,6 +70,23 @@
   .year-table{width:100%;border-collapse:collapse;font-size:12px;}.year-table th{padding:10px 2px;color:var(--ink-3);border-bottom:1px solid var(--line);font-weight:normal;}
   .year-table td{padding:10px 2px;text-align:center;border-bottom:1px solid var(--line);}
   .val-max{color:#ef4444;}.val-min{color:#3b82f6;}.val-rain{color:var(--accent-1);font-weight:600;}.val-no-rain{color:var(--ink-4);}
+  
+  /* 雷达图容器样式 */
+  .radar-container {
+    background: var(--card); 
+    border: 1px solid var(--card-line); 
+    border-radius: 22px; 
+    overflow: hidden;
+    padding: 10px;
+  }
+  .radar-container iframe {
+    display: block;
+    width: 100%;
+    height: 320px;
+    border: none;
+    border-radius: 12px;
+    background: #1a1a1a;
+  }
   footer{margin-top:26px;text-align:center;font-size:11px;color:var(--ink-4);}
 </style>
 </head>
@@ -133,13 +150,22 @@
       </div>
     </section>
 
+    <!-- 未来7天预报（取消数据源切换） -->
     <section class="block">
       <h2>未来 7 天预报</h2>
-      <div class="source-toggle">
-        <div class="source-btn active" data-source="central">中央气象台</div>
-        <div class="source-btn" data-source="dongguan">东莞气象台</div>
-      </div>
       <div class="daily" id="daily"></div>
+    </section>
+
+    <!-- 新增：气象雷达回波图 -->
+    <section class="block">
+      <h2>气象雷达回波 (东莞)</h2>
+      <div class="radar-container">
+        <!-- 嵌入 Windy 动态雷达图，中心点定在东莞 (113.75, 23.04) -->
+        <iframe 
+          src="https://embed.windy.com/embed2.html?lat=23.04&lon=113.75&zoom=8&level=surface&overlay=radar&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=23.04&detailLon=113.75&metricWind=default&metricTemp=default&radarRange=-1" 
+          allowfullscreen>
+        </iframe>
+      </div>
     </section>
     
     <section class="block">
@@ -174,7 +200,7 @@
         </div>
       </div>
     </section>
-    <footer>数据来源：中央气象台 / 广东应急气象 · 仅供个人使用</footer>
+    <footer>数据来源：中央气象台 · 雷达图：Windy · 仅供个人使用</footer>
   </div>
 </div>
 <script>
@@ -187,8 +213,8 @@ renderTheme();setInterval(()=>{if(themeMode==='auto')renderTheme();},60000);
 const formatTempPlain = v => v == null || v === '--' ? '--' : Number(v).toFixed(1);
 const formatTemp = v => v == null || v === '--' ? '--' : Number(v).toFixed(1).replace('.','<span class="dot">.</span>');
 const icon=n=>`<svg viewBox="0 0 24 24"><use href="#i-${n}"/></svg>`;
-let forecastData={central:[],dongguan:[]},currentForecastSource='central';
-let todayRealData = null; // 保存今日实况用于历史记录合并
+let forecastData={central:[]};
+let todayRealData = null;
 
 function renderNow(now){document.getElementById('tempNum').innerHTML=formatTemp(now.temp);document.getElementById('feels').innerHTML=formatTemp(now.feels)+'°';document.getElementById('humidity').textContent=now.humidity+'%';document.getElementById('weatherDesc').textContent=now.text;document.getElementById('wind').textContent=now.wind;const d=new Date();document.getElementById('updatedAt').textContent=`更新于 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;document.getElementById('todayDate').textContent=`${d.getMonth()+1}月${d.getDate()}日`;}
 function renderHourly(h){document.getElementById('hourly').innerHTML=h.map((x,i)=>`<div class="hour ${i===0?'now':''}"><div class="hour-t">${x.t}</div>${icon(x.icon)}<div class="hour-deg">${formatTemp(x.temp)}°</div></div>`).join('');}
@@ -207,13 +233,6 @@ function renderDaily(daily){
     return `<div class="day"><div class="day-name">${d.d}</div>${icon(d.icon)}<div class="day-text">${d.text}</div><div class="day-min">${formatTemp(minV)}°</div><div class="tempbar"><i style="left:${left}%;width:${width}%"></i></div><div class="day-max">${formatTemp(maxV)}°</div></div>`;
   }).join('');
 }
-
-document.querySelectorAll('.source-btn').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.source-btn').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  currentForecastSource=b.dataset.source;
-  renderDaily(forecastData[currentForecastSource]);
-}));
 
 function deepNum(obj, fallback = null) {
   if (obj === null || obj === undefined || obj === '') return fallback;
@@ -272,7 +291,6 @@ function renderPastData(pts){
   window._extractedMin = extractedMin;
   window._maxWind = maxW;
   
-  // 计算实况日平均温（取 02,08,14,20 时的均值，如果没这 4 个点，就用整体均值近似）
   const pts4 = pts.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
   const avgT = pts4.length === 4 ? (pts4.reduce((a,c)=>a+deepNum(c.temperature,0),0) / 4) : (pts.reduce((a,c)=>a+deepNum(c.temperature,0),0) / pts.length);
   
@@ -286,7 +304,6 @@ function renderPastData(pts){
     maxWind: maxW
   };
 
-  // 重新绘制带有数值标签的折线图
   const svg=document.getElementById('pastChart');
   const temps = pts.map(p=>deepNum(p.temperature,null)||0);
   const rains = pts.map(p=>deepNum(p.rain1h,0));
@@ -305,14 +322,12 @@ function renderPastData(pts){
   const poly = points.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
   const bars = points.map(p=>`<rect x="${(p.x-1.2).toFixed(1)}" y="${(rainBottom-(p.r/mr)*(rainBottom-rainTop)).toFixed(1)}" width="2.4" height="${((p.r/mr)*(rainBottom-rainTop)).toFixed(1)}" fill="#6aa9ff" opacity="0.8"/>`).join('');
 
-  // 生成数据标签：每隔3个点显示，或者最高/最低点显示
   let labels = '';
   points.forEach((p, i) => {
     const isMax = p.val === extractedMax;
     const isMin = p.val === extractedMin;
     if (i % 4 === 0 || isMax || isMin) {
       if (p.val !== null) {
-        // 为了避免文字挤在一起，根据是否极值调整 Y 轴偏移
         const labelY = isMax ? p.y - 4 : (isMin ? p.y + 7 : p.y - 3);
         const labelColor = isMax ? '#ef4444' : (isMin ? '#3b82f6' : 'var(--ink-3)');
         labels += `<text x="${p.x}" y="${labelY}" font-size="4.5" fill="${labelColor}" text-anchor="middle" font-family="sans-serif">${p.val.toFixed(1)}</text>`;
@@ -367,7 +382,6 @@ function initYear(){
 function renderYearTable(){
   const tb=document.getElementById('yearTbody');
   
-  // 动态合并今天的最新实况（防止机器人还没跑，或者数据不同步）
   let displayData = [...allYearData];
   if (todayRealData) {
     const existIdx = displayData.findIndex(d => d.m === todayRealData.m && d.d === todayRealData.d);
@@ -376,7 +390,7 @@ function renderYearTable(){
     } else {
       displayData.push(todayRealData);
     }
-    displayData = processHistoryData(displayData); // 重新计算季节
+    displayData = processHistoryData(displayData);
   }
 
   const dt=displayData.filter(d=>d.m===currentYearMonth),cm={spring:'var(--season-spring)',summer:'var(--season-summer)',autumn:'var(--season-autumn)',winter:'var(--season-winter)'};
@@ -431,7 +445,7 @@ async function loadData(){
           min: min
         };
       });
-      if(currentForecastSource==='central')renderDaily(forecastData.central);
+      renderDaily(forecastData.central);
     }
     
     if(data.passedchart){
@@ -458,29 +472,12 @@ async function loadData(){
     document.getElementById('todayMaxForecast').textContent = officialMax !== null ? '预报: ' + formatTempPlain(officialMax) + '°' : '预报: --';
     document.getElementById('todayMinForecast').textContent = officialMin !== null ? '预报: ' + formatTempPlain(officialMin) + '°' : '预报: --';
 
-    renderYearTable(); // 获取到今日实况后，刷新全年记录表
+    renderYearTable();
     
   }catch(e){
     console.warn("数据加载失败", e);
     document.getElementById('weatherDesc').textContent = "等待数据更新...";
   }
-}
-
-async function loadDg121(){
-  try {
-    const res = await fetch(`./data/dongguan.json?t=` + new Date().getTime());
-    if (!res.ok) throw new Error('404');
-    const data = await res.json();
-    if (data && data.length > 0) {
-      forecastData.dongguan = data;
-    } else {
-      throw new Error('Empty');
-    }
-  } catch(e) {
-    console.warn("广东应急气象数据获取失败，尝试回退到中央气象台");
-    forecastData.dongguan = forecastData.central.map(d => ({...d, text: d.text + '(粤)'}));
-  }
-  if(currentForecastSource==='dongguan')renderDaily(forecastData.dongguan);
 }
 
 async function loadHistory(){
@@ -498,8 +495,8 @@ async function loadHistory(){
   }
 }
 
-initYear();loadData();loadDg121();loadHistory();
-document.getElementById('refresh').addEventListener('click',()=>{loadData();loadDg121();});
+initYear();loadData();loadHistory();
+document.getElementById('refresh').addEventListener('click',()=>{loadData();});
 </script>
 </body>
 </html>
