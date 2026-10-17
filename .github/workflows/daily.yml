@@ -22,10 +22,20 @@ jobs:
           async function run() {
             if (!fs.existsSync('./data')) fs.mkdirSync('./data');
             
-            // 1. 抓取中央气象台 JSON
             try {
+              // 1. 抓取天气数据
               const r = await fetch('https://www.nmc.cn/rest/weather?stationid=cqsJg');
               const d = (await r.json()).data;
+              
+              // 2. 抓取空气质量数据
+              const aqiRes = await fetch('https://www.nmc.cn/f/rest/aqi/cqsJg');
+              const aqiData = await aqiRes.json();
+              
+              // 将空气质量数据合并到主数据对象中
+              if (aqiData) {
+                d.aqi = aqiData;
+              }
+              
               if(d) {
                 fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
                 
@@ -46,28 +56,7 @@ jobs:
                 if (idx >= 0) history[idx] = rec; else history.push(rec);
                 fs.writeFileSync('./data/history.json', JSON.stringify(history, null, 2));
               }
-            } catch(e) { console.log('NMC error', e); }
-
-            // 2. 下载东莞气象局精细雷达图 (GIF)
-            try {
-              const radarUrl = 'http://www.dg121.com/tianqiliao/donghua_yun_radar/radar.gif';
-              const radarRes = await fetch(radarUrl, {
-                headers: {
-                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                  'Referer': 'http://www.dg121.com/'
-                }
-              });
-              if (radarRes.ok) {
-                const arrayBuffer = await radarRes.arrayBuffer();
-                const buffer = Buffer.from(arrayBuffer);
-                fs.writeFileSync('./data/dongguan_radar.gif', buffer);
-                console.log('✅ 东莞雷达图下载成功');
-              } else {
-                console.log('⚠️ 东莞雷达图下载失败，状态码:', radarRes.status);
-              }
-            } catch(e) { 
-              console.log('⚠️ 下载东莞雷达图时出错:', e.message); 
-            }
+            } catch(e) { console.log('Error', e); }
           }
           run();
           "
@@ -76,5 +65,5 @@ jobs:
           git config --global user.name 'Auto-Bot'
           git config --global user.email 'bot@example.com'
           git add data/
-          git commit -m "Update weather & radar data" || exit 0
+          git commit -m "Update weather & AQI data" || exit 0
           git push
