@@ -19,18 +19,16 @@ jobs:
         run: |
           node -e "
           const fs = require('fs');
-          
           async function run() {
             if (!fs.existsSync('./data')) fs.mkdirSync('./data');
             
-            // 1. 抓取中央气象台 (NMC)
+            // 1. 抓取中央气象台 JSON
             try {
               const r = await fetch('https://www.nmc.cn/rest/weather?stationid=cqsJg');
               const d = (await r.json()).data;
               if(d) {
                 fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
                 
-                // 历史数据记录逻辑保持不变
                 const now = new Date();
                 const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
                 const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
@@ -50,47 +48,25 @@ jobs:
               }
             } catch(e) { console.log('NMC error', e); }
 
-            // 2. 抓取广东应急气象 (东莞 441900)
+            // 2. 下载东莞气象局精细雷达图 (GIF)
             try {
-              // 注意：请替换为你申请到的真实 Key。如果测试 Key 有效，可保留默认值。
-              const KEY = '0b9fdcc756a60ea59f82aa3a'; 
-              const dgRes = await fetch(`http://open.gd121.cn/share/getData.do?type=json&code=441900&productType=FCST&key=${KEY}`);
-              const dgJson = await dgRes.json();
-              
-              // 广东应急气象返回的数据结构可能是 { fcst: [...] } 或直接是数组
-              // 这里写一个通用的提取逻辑
-              let rawList = dgJson.fcst || dgJson.data || dgJson;
-              if (!Array.isArray(rawList)) {
-                // 如果是对象，尝试取出里面的数组
-                const keys = Object.keys(dgJson);
-                if (keys.length > 0 && Array.isArray(dgJson[keys[0]])) {
-                  rawList = dgJson[keys[0]];
+              const radarUrl = 'http://www.dg121.com/tianqiliao/donghua_yun_radar/radar.gif';
+              const radarRes = await fetch(radarUrl, {
+                headers: {
+                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                  'Referer': 'http://www.dg121.com/'
                 }
-              }
-
-              if (Array.isArray(rawList) && rawList.length > 0) {
-                let dgForecast = rawList.map((item, i) => {
-                  // 尝试从各种可能的字段名中提取数据
-                  const dateStr = item.date || item.fcstDate || item.time || '';
-                  const text = item.weather || item.weatherDesc || item.info || '多云';
-                  const min = item.minTemp || item.min_temp || item.low || 0;
-                  const max = item.maxTemp || item.max_temp || item.high || 0;
-                  
-                  return {
-                    d: i === 0 ? '今天' : (dateStr ? dateStr.slice(5) : ''),
-                    icon: 'cloud',
-                    text: text,
-                    min: Number(min) || '--',
-                    max: Number(max) || '--'
-                  };
-                });
-                fs.writeFileSync('./data/dongguan.json', JSON.stringify(dgForecast, null, 2));
-                console.log('广东应急气象抓取成功');
+              });
+              if (radarRes.ok) {
+                const arrayBuffer = await radarRes.arrayBuffer();
+                const buffer = Buffer.from(arrayBuffer);
+                fs.writeFileSync('./data/dongguan_radar.gif', buffer);
+                console.log('✅ 东莞雷达图下载成功');
               } else {
-                console.log('广东应急气象返回格式异常或为空');
+                console.log('⚠️ 东莞雷达图下载失败，状态码:', radarRes.status);
               }
             } catch(e) { 
-              console.log('广东应急气象 error', e); 
+              console.log('⚠️ 下载东莞雷达图时出错:', e.message); 
             }
           }
           run();
@@ -100,5 +76,5 @@ jobs:
           git config --global user.name 'Auto-Bot'
           git config --global user.email 'bot@example.com'
           git add data/
-          git commit -m "Update weather data" || exit 0
+          git commit -m "Update weather & radar data" || exit 0
           git push
