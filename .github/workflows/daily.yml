@@ -15,24 +15,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Install dependencies
-        run: npm install cheerio
       - name: Run fetch script
         run: |
           node -e "
           const fs = require('fs');
-          const cheerio = require('cheerio');
           
           async function run() {
             if (!fs.existsSync('./data')) fs.mkdirSync('./data');
             
-            // 1. 抓取中央气象台
+            // 1. 抓取中央气象台 (NMC)
             try {
               const r = await fetch('https://www.nmc.cn/rest/weather?stationid=cqsJg');
               const d = (await r.json()).data;
               if(d) {
                 fs.writeFileSync('./data/current.json', JSON.stringify(d, null, 2));
                 
+                // 历史数据记录逻辑保持不变
                 const now = new Date();
                 const pts = d.passedchart.filter(p => ['02','08','14','20'].includes(p.time.slice(11,13)));
                 const avg = pts.length ? pts.reduce((a,c)=>a+c.temperature,0)/pts.length : d.real.weather.temperature;
@@ -52,46 +50,48 @@ jobs:
               }
             } catch(e) { console.log('NMC error', e); }
 
-            // 2. 抓取东莞气象台 (dg121.com)
+            // 2. 抓取广东应急气象 (东莞 441900)
             try {
-              const rDg = await fetch('https://www.dg121.com/Jcw/', {
-                headers: {
-                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                  'Accept-Language': 'zh-CN,zh;q=0.9'
+              // 注意：请替换为你申请到的真实 Key。如果测试 Key 有效，可保留默认值。
+              const KEY = '0b9fdcc756a60ea59f82aa3a'; 
+              const dgRes = await fetch(`http://open.gd121.cn/share/getData.do?type=json&code=441900&productType=FCST&key=${KEY}`);
+              const dgJson = await dgRes.json();
+              
+              // 广东应急气象返回的数据结构可能是 { fcst: [...] } 或直接是数组
+              // 这里写一个通用的提取逻辑
+              let rawList = dgJson.fcst || dgJson.data || dgJson;
+              if (!Array.isArray(rawList)) {
+                // 如果是对象，尝试取出里面的数组
+                const keys = Object.keys(dgJson);
+                if (keys.length > 0 && Array.isArray(dgJson[keys[0]])) {
+                  rawList = dgJson[keys[0]];
                 }
-              });
-              const html = await rDg.text();
-              const $ = cheerio.load(html);
-              
-              // 试着找包含镇街的表格
-              let dgForecast = [];
-              // 在网页中查找包含“厚街”或者“东莞”表格行
-              // 官网结构一般是：<tr><td>镇街</td><td>日期</td><td>天气</td>...</tr>
-              // 但网页多变，我们用更暴力的正则查找包含“℃”的字眼
-              const matches = html.match(/(\d{1,2})[℃|C]~(\d{1,2})[℃|C]/g) || [];
-              const texts = html.match(/(晴|多云|阴|阵雨|雷阵雨|大雨|中雨|小雨)/g) || [];
-              
-              // 如果页面里有真实的预报数据（找到至少7组气温），我们就认为抓取成功
-              if (matches.length >= 7) {
-                 for (let i = 0; i < 7; i++) {
-                   let tempRange = matches[i].split('~');
-                   let minT = tempRange[0].replace(/[℃|C]/g, '');
-                   let maxT = tempRange[1].replace(/[℃|C]/g, '');
-                   dgForecast.push({
-                     d: i === 0 ? '今天' : '周' + '日一二三四五六'[new Date(Date.now() + i*86400000).getDay()],
-                     icon: 'cloud',
-                     text: texts[i] || '多云',
-                     min: Number(minT),
-                     max: Number(maxT)
-                   });
-                 }
-                 fs.writeFileSync('./data/dongguan.json', JSON.stringify(dgForecast, null, 2));
-                 console.log('东莞气象台抓取成功');
-              } else {
-                 console.log('未在页面中找到合适的天气数据格式');
               }
-            } catch(e) { console.log('DG121 error', e); }
+
+              if (Array.isArray(rawList) && rawList.length > 0) {
+                let dgForecast = rawList.map((item, i) => {
+                  // 尝试从各种可能的字段名中提取数据
+                  const dateStr = item.date || item.fcstDate || item.time || '';
+                  const text = item.weather || item.weatherDesc || item.info || '多云';
+                  const min = item.minTemp || item.min_temp || item.low || 0;
+                  const max = item.maxTemp || item.max_temp || item.high || 0;
+                  
+                  return {
+                    d: i === 0 ? '今天' : (dateStr ? dateStr.slice(5) : ''),
+                    icon: 'cloud',
+                    text: text,
+                    min: Number(min) || '--',
+                    max: Number(max) || '--'
+                  };
+                });
+                fs.writeFileSync('./data/dongguan.json', JSON.stringify(dgForecast, null, 2));
+                console.log('广东应急气象抓取成功');
+              } else {
+                console.log('广东应急气象返回格式异常或为空');
+              }
+            } catch(e) { 
+              console.log('广东应急气象 error', e); 
+            }
           }
           run();
           "
