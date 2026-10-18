@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-19 03:10",
+    "publish_time": "2026-10-19 03:35",
     "weather": {
-      "temperature": 25.2,
-      "temperatureDiff": -0.3,
+      "temperature": 25,
+      "temperatureDiff": -0.4,
       "airpressure": 9999,
       "humidity": 80,
       "rain": 0,
-      "rcomfort": 75,
-      "icomfort": 2,
+      "rcomfort": 72,
+      "icomfort": 1,
       "info": "晴",
       "img": "0",
-      "feelst": 29.4
+      "feelst": 28.6
     },
     "wind": {
-      "direct": "9999",
-      "degree": 9999,
+      "direct": "东南风",
+      "degree": 133,
       "power": "微风",
-      "speed": 0
+      "speed": 0.8
     },
     "warn": {
       "alert": "9999",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-10-19 02:00",
-    "aqi": 38,
+    "forecasttime": "2026-10-19 03:00",
+    "aqi": 24,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/18/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261018193000000.PNG?v=1792352594783",
+    "image": "/product/2026/10/18/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261018195400000.PNG?v=1792353897475",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-19 02:00",
-    "aqi": 38,
+    "forecasttime": "2026-10-19 03:00",
+    "aqi": 24,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
