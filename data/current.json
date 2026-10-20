@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-21 06:45",
+    "publish_time": "2026-10-21 07:20",
     "weather": {
-      "temperature": 25.4,
-      "temperatureDiff": 0.6,
+      "temperature": 26.1,
+      "temperatureDiff": 0.3,
       "airpressure": 9999,
-      "humidity": 89,
+      "humidity": 87,
       "rain": 0,
-      "rcomfort": 73,
-      "icomfort": 1,
+      "rcomfort": 76,
+      "icomfort": 2,
       "info": "晴",
       "img": "0",
-      "feelst": 29.5
+      "feelst": 31
     },
     "wind": {
-      "direct": "东南风",
-      "degree": 112,
+      "direct": "9999",
+      "degree": 9999,
       "power": "微风",
-      "speed": 1.1
+      "speed": 0.1
     },
     "warn": {
       "alert": "9999",
@@ -386,6 +386,19 @@
       "rain6h": 9999,
       "temperature": 25.7,
       "tempDiff": "",
+      "humidity": 88,
+      "pressure": 1010,
+      "windDirection": 110,
+      "windSpeed": 0.8,
+      "time": "2026-10-21 07:00"
+    },
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 25.7,
+      "tempDiff": "",
       "humidity": 89,
       "pressure": 1009,
       "windDirection": 80,
@@ -677,19 +690,6 @@
       "windDirection": 80,
       "windSpeed": 1.4,
       "time": "2026-10-20 08:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 24.9,
-      "tempDiff": "",
-      "humidity": 89,
-      "pressure": 1010,
-      "windDirection": 342,
-      "windSpeed": 0.3,
-      "time": "2026-10-20 07:00"
     }
   ],
   "climate": {
@@ -771,7 +771,7 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/20/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261020230000000.PNG?v=1792537997782",
+    "image": "/product/2026/10/20/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261020233600000.PNG?v=1792539991954",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
