@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-22 06:40",
+    "publish_time": "2026-10-22 07:20",
     "weather": {
-      "temperature": 23,
-      "temperatureDiff": -2.4,
+      "temperature": 22.9,
+      "temperatureDiff": -3.2,
       "airpressure": 9999,
       "humidity": 72,
       "rain": 0,
-      "rcomfort": 66,
+      "rcomfort": 65,
       "icomfort": 0,
       "info": "晴",
       "img": "0",
-      "feelst": 24.9
+      "feelst": 24.1
     },
     "wind": {
       "direct": "西北风",
-      "degree": 335,
+      "degree": 349,
       "power": "微风",
-      "speed": 1.6
+      "speed": 2.7
     },
     "warn": {
       "alert": "9999",
@@ -384,6 +384,19 @@
       "rain24h": 9999,
       "rain12h": 9999,
       "rain6h": 9999,
+      "temperature": 22.9,
+      "tempDiff": "",
+      "humidity": 73,
+      "pressure": 1010,
+      "windDirection": 347,
+      "windSpeed": 2.6,
+      "time": "2026-10-22 07:00"
+    },
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
       "temperature": 23.3,
       "tempDiff": "",
       "humidity": 71,
@@ -677,19 +690,6 @@
       "windDirection": 88,
       "windSpeed": 0.9,
       "time": "2026-10-21 08:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 25.7,
-      "tempDiff": "",
-      "humidity": 88,
-      "pressure": 1010,
-      "windDirection": 110,
-      "windSpeed": 0.8,
-      "time": "2026-10-21 07:00"
     }
   ],
   "climate": {
@@ -771,7 +771,7 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/21/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261021225400000.PNG?v=1792624045265",
+    "image": "/product/2026/10/21/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261021233600000.PNG?v=1792626409475",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
