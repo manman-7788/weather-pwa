@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-21 15:30",
+    "publish_time": "2026-10-21 16:30",
     "weather": {
-      "temperature": 33.8,
-      "temperatureDiff": 0.9,
+      "temperature": 32.6,
+      "temperatureDiff": 0,
       "airpressure": 9999,
-      "humidity": 50,
+      "humidity": 49,
       "rain": 0,
-      "rcomfort": 78,
+      "rcomfort": 75,
       "icomfort": 2,
       "info": "晴",
       "img": "0",
-      "feelst": 37.4
+      "feelst": 34.5
     },
     "wind": {
       "direct": "东北风",
-      "degree": 11,
-      "power": "微风",
-      "speed": 2
+      "degree": 60,
+      "power": "3级",
+      "speed": 3.8
     },
     "warn": {
       "alert": "9999",
@@ -50,27 +50,27 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-21 12:00",
+    "publish_time": "2026-10-21 20:00",
     "detail": [
       {
         "date": "2026-10-21",
-        "pt": "2026-10-21 12:00",
+        "pt": "2026-10-21 20:00",
         "day": {
           "weather": {
-            "info": "晴",
-            "img": "0",
-            "temperature": "33"
+            "info": "9999",
+            "img": "9999",
+            "temperature": "9999"
           },
           "wind": {
-            "direct": "无持续风向",
-            "power": "微风"
+            "direct": "9999",
+            "power": "9999"
           }
         },
         "night": {
           "weather": {
             "info": "晴",
             "img": "0",
-            "temperature": "23"
+            "temperature": "21"
           },
           "wind": {
             "direct": "无持续风向",
@@ -81,12 +81,12 @@
       },
       {
         "date": "2026-10-22",
-        "pt": "2026-10-21 12:00",
+        "pt": "2026-10-21 20:00",
         "day": {
           "weather": {
             "info": "晴",
             "img": "0",
-            "temperature": "30"
+            "temperature": "31"
           },
           "wind": {
             "direct": "无持续风向",
@@ -95,9 +95,9 @@
         },
         "night": {
           "weather": {
-            "info": "多云",
-            "img": "1",
-            "temperature": "22"
+            "info": "晴",
+            "img": "0",
+            "temperature": "21"
           },
           "wind": {
             "direct": "无持续风向",
@@ -108,11 +108,11 @@
       },
       {
         "date": "2026-10-23",
-        "pt": "2026-10-21 12:00",
+        "pt": "2026-10-21 20:00",
         "day": {
           "weather": {
-            "info": "多云",
-            "img": "1",
+            "info": "晴",
+            "img": "0",
             "temperature": "31"
           },
           "wind": {
@@ -135,92 +135,11 @@
       },
       {
         "date": "2026-10-24",
-        "pt": "2026-10-21 12:00",
+        "pt": "2026-10-21 20:00",
         "day": {
           "weather": {
-            "info": "多云",
-            "img": "1",
-            "temperature": "31"
-          },
-          "wind": {
-            "direct": "无持续风向",
-            "power": "微风"
-          }
-        },
-        "night": {
-          "weather": {
-            "info": "多云",
-            "img": "1",
-            "temperature": "24"
-          },
-          "wind": {
-            "direct": "无持续风向",
-            "power": "微风"
-          }
-        },
-        "precipitation": 0
-      },
-      {
-        "date": "2026-10-25",
-        "pt": "2026-10-21 12:00",
-        "day": {
-          "weather": {
-            "info": "多云",
-            "img": "1",
-            "temperature": "31"
-          },
-          "wind": {
-            "direct": "无持续风向",
-            "power": "微风"
-          }
-        },
-        "night": {
-          "weather": {
-            "info": "多云",
-            "img": "1",
-            "temperature": "24"
-          },
-          "wind": {
-            "direct": "无持续风向",
-            "power": "微风"
-          }
-        },
-        "precipitation": 0
-      },
-      {
-        "date": "2026-10-26",
-        "pt": "2026-10-21 12:00",
-        "day": {
-          "weather": {
-            "info": "多云",
-            "img": "1",
-            "temperature": "31"
-          },
-          "wind": {
-            "direct": "无持续风向",
-            "power": "微风"
-          }
-        },
-        "night": {
-          "weather": {
-            "info": "多云",
-            "img": "1",
-            "temperature": "24"
-          },
-          "wind": {
-            "direct": "无持续风向",
-            "power": "微风"
-          }
-        },
-        "precipitation": 0
-      },
-      {
-        "date": "2026-10-27",
-        "pt": "2026-10-21 12:00",
-        "day": {
-          "weather": {
-            "info": "多云",
-            "img": "1",
+            "info": "晴",
+            "img": "0",
             "temperature": "31"
           },
           "wind": {
@@ -240,15 +159,96 @@
           }
         },
         "precipitation": 0
+      },
+      {
+        "date": "2026-10-25",
+        "pt": "2026-10-21 20:00",
+        "day": {
+          "weather": {
+            "info": "多云",
+            "img": "1",
+            "temperature": "32"
+          },
+          "wind": {
+            "direct": "无持续风向",
+            "power": "微风"
+          }
+        },
+        "night": {
+          "weather": {
+            "info": "多云",
+            "img": "1",
+            "temperature": "25"
+          },
+          "wind": {
+            "direct": "无持续风向",
+            "power": "微风"
+          }
+        },
+        "precipitation": 0
+      },
+      {
+        "date": "2026-10-26",
+        "pt": "2026-10-21 20:00",
+        "day": {
+          "weather": {
+            "info": "多云",
+            "img": "1",
+            "temperature": "31"
+          },
+          "wind": {
+            "direct": "无持续风向",
+            "power": "微风"
+          }
+        },
+        "night": {
+          "weather": {
+            "info": "多云",
+            "img": "1",
+            "temperature": "25"
+          },
+          "wind": {
+            "direct": "无持续风向",
+            "power": "微风"
+          }
+        },
+        "precipitation": 0
+      },
+      {
+        "date": "2026-10-27",
+        "pt": "2026-10-21 20:00",
+        "day": {
+          "weather": {
+            "info": "多云",
+            "img": "1",
+            "temperature": "31"
+          },
+          "wind": {
+            "direct": "无持续风向",
+            "power": "微风"
+          }
+        },
+        "night": {
+          "weather": {
+            "info": "多云",
+            "img": "1",
+            "temperature": "24"
+          },
+          "wind": {
+            "direct": "无持续风向",
+            "power": "微风"
+          }
+        },
+        "precipitation": 0
       }
     ]
   },
   "air": {
-    "forecasttime": "2026-10-21 15:00",
-    "aqi": 39,
-    "aq": 1,
-    "text": "优",
-    "aqiCode": "99092"
+    "forecasttime": "",
+    "aqi": 9999,
+    "aq": 9999,
+    "text": "-",
+    "aqiCode": "9999"
   },
   "tempchart": [
     {
@@ -316,44 +316,44 @@
     },
     {
       "time": "2026/10/21",
-      "max_temp": 33.5,
-      "min_temp": 23.2,
+      "max_temp": 33.4,
+      "min_temp": 21.5,
+      "day_img": "9999",
+      "day_text": "9999",
+      "night_img": "0",
+      "night_text": "晴"
+    },
+    {
+      "time": "2026/10/22",
+      "max_temp": 31,
+      "min_temp": 21.6,
       "day_img": "0",
       "day_text": "晴",
       "night_img": "0",
       "night_text": "晴"
     },
     {
-      "time": "2026/10/22",
-      "max_temp": 30.8,
-      "min_temp": 22.9,
+      "time": "2026/10/23",
+      "max_temp": 31.2,
+      "min_temp": 22.6,
       "day_img": "0",
       "day_text": "晴",
       "night_img": "1",
       "night_text": "多云"
     },
     {
-      "time": "2026/10/23",
-      "max_temp": 31.3,
-      "min_temp": 22.9,
-      "day_img": "1",
-      "day_text": "多云",
-      "night_img": "1",
-      "night_text": "多云"
-    },
-    {
       "time": "2026/10/24",
-      "max_temp": 31.9,
-      "min_temp": 24.1,
-      "day_img": "1",
-      "day_text": "多云",
+      "max_temp": 31.6,
+      "min_temp": 23.5,
+      "day_img": "0",
+      "day_text": "晴",
       "night_img": "1",
       "night_text": "多云"
     },
     {
       "time": "2026/10/25",
-      "max_temp": 31.3,
-      "min_temp": 24.9,
+      "max_temp": 32.9,
+      "min_temp": 25.2,
       "day_img": "1",
       "day_text": "多云",
       "night_img": "1",
@@ -361,8 +361,8 @@
     },
     {
       "time": "2026/10/26",
-      "max_temp": 31.5,
-      "min_temp": 24.4,
+      "max_temp": 31.9,
+      "min_temp": 25,
       "day_img": "1",
       "day_text": "多云",
       "night_img": "1",
@@ -370,8 +370,8 @@
     },
     {
       "time": "2026/10/27",
-      "max_temp": 31,
-      "min_temp": 23.8,
+      "max_temp": 31.3,
+      "min_temp": 24.1,
       "day_img": "1",
       "day_text": "多云",
       "night_img": "1",
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 32.9,
+      "tempDiff": "",
+      "humidity": 50,
+      "pressure": 1006,
+      "windDirection": 57,
+      "windSpeed": 3.7,
+      "time": "2026-10-21 16:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 203,
       "windSpeed": 1.1,
       "time": "2026-10-20 17:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 32.7,
-      "tempDiff": "",
-      "humidity": 58,
-      "pressure": 1007,
-      "windDirection": 346,
-      "windSpeed": 0.8,
-      "time": "2026-10-20 16:00"
     }
   ],
   "climate": {
@@ -771,14 +771,14 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/21/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261021074800000.PNG?v=1792569671846",
+    "image": "/product/2026/10/21/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261021084800000.PNG?v=1792573127330",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-21 15:00",
-    "aqi": 39,
-    "aq": 1,
-    "text": "优",
+    "forecasttime": "",
+    "aqi": 9999,
+    "aq": 9999,
+    "text": "-",
     "aqiCode": ""
   }
 }
