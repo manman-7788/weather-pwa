@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-23 22:55",
+    "publish_time": "2026-10-23 23:35",
     "weather": {
-      "temperature": 26.3,
-      "temperatureDiff": 2.3,
+      "temperature": 25.9,
+      "temperatureDiff": 2.2,
       "airpressure": 9999,
-      "humidity": 61,
+      "humidity": 63,
       "rain": 0,
       "rcomfort": 69,
       "icomfort": 0,
       "info": "多云",
       "img": "1",
-      "feelst": 27.5
+      "feelst": 27.6
     },
     "wind": {
       "direct": "西北风",
-      "degree": 338,
+      "degree": 335,
       "power": "微风",
-      "speed": 3.2
+      "speed": 2.5
     },
     "warn": {
       "alert": "9999",
@@ -39,8 +39,8 @@
       "pic2": "9999"
     },
     "sunriseSunset": {
-      "sunrise": "2026-10-23 06:25",
-      "sunset": "2026-10-23 17:53"
+      "sunrise": "2026-10-24 06:25",
+      "sunset": "2026-10-24 17:52"
     }
   },
   "predict": {
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-10-23 22:00",
-    "aqi": 26,
+    "forecasttime": "2026-10-23 23:00",
+    "aqi": 28,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 26.4,
+      "tempDiff": "",
+      "humidity": 61,
+      "pressure": 1002,
+      "windDirection": 354,
+      "windSpeed": 3.5,
+      "time": "2026-10-23 23:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 5,
       "windSpeed": 4,
       "time": "2026-10-23 00:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 24.1,
-      "tempDiff": "",
-      "humidity": 70,
-      "pressure": 1007,
-      "windDirection": 339,
-      "windSpeed": 4.8,
-      "time": "2026-10-22 23:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/23/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261023151200000.PNG?v=1792768938401",
+    "image": "/product/2026/10/23/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261023154800000.PNG?v=1792771268000",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-23 22:00",
-    "aqi": 26,
+    "forecasttime": "2026-10-23 23:00",
+    "aqi": 28,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
