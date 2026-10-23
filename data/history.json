@@ -56,10 +56,10 @@
   {
     "m": 10,
     "d": 23,
-    "avgTemp": 24.8,
+    "avgTemp": 25.3,
     "minTemp": 23.7,
     "maxTemp": 31.2,
-    "rain": 0,
+    "rain": 19998,
     "maxWind": 0
   }
 ]
