@@ -68,7 +68,7 @@
     "avgTemp": 26.4,
     "minTemp": 25.2,
     "maxTemp": 32.4,
-    "rain": 9999,
+    "rain": 0,
     "maxWind": 0
   }
 ]
