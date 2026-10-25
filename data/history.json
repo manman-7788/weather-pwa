@@ -75,8 +75,8 @@
     "m": 10,
     "d": 25,
     "avgTemp": 25.7,
-    "minTemp": 25.1,
-    "maxTemp": 31.2,
+    "minTemp": 23.9,
+    "maxTemp": 33.1,
     "rain": 0,
     "maxWind": 0
   }
