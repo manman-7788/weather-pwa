@@ -70,5 +70,14 @@
     "maxTemp": 31.2,
     "rain": 0,
     "maxWind": 0
+  },
+  {
+    "m": 10,
+    "d": 25,
+    "avgTemp": 25.8,
+    "minTemp": 25.1,
+    "maxTemp": 31.2,
+    "rain": 0,
+    "maxWind": 0
   }
 ]
