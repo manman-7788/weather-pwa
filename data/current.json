@@ -6,12 +6,12 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-28 23:35",
+    "publish_time": "2026-10-29 00:40",
     "weather": {
-      "temperature": 25.5,
-      "temperatureDiff": 0.9,
+      "temperature": 25.3,
+      "temperatureDiff": 1.1,
       "airpressure": 9999,
-      "humidity": 71,
+      "humidity": 73,
       "rain": 0,
       "rcomfort": 70,
       "icomfort": 1,
@@ -21,9 +21,9 @@
     },
     "wind": {
       "direct": "东南风",
-      "degree": 128,
+      "degree": 131,
       "power": "微风",
-      "speed": 1.8
+      "speed": 1.6
     },
     "warn": {
       "alert": "9999",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-10-28 23:00",
-    "aqi": 49,
+    "forecasttime": "2026-10-29 00:00",
+    "aqi": 45,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 25.4,
+      "tempDiff": "",
+      "humidity": 72,
+      "pressure": 1013,
+      "windDirection": 156,
+      "windSpeed": 1.4,
+      "time": "2026-10-29 00:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 75,
       "windSpeed": 1.1,
       "time": "2026-10-28 01:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 24.6,
-      "tempDiff": "",
-      "humidity": 69,
-      "pressure": 1013,
-      "windDirection": 109,
-      "windSpeed": 0.7,
-      "time": "2026-10-28 00:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/28/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261028160000000.PNG?v=1793203829562",
+    "image": "/product/2026/10/28/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261028165400000.PNG?v=1793207235117",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-28 23:00",
-    "aqi": 49,
+    "forecasttime": "2026-10-29 00:00",
+    "aqi": 45,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
