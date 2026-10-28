@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-28 20:55",
+    "publish_time": "2026-10-28 21:40",
     "weather": {
-      "temperature": 26.1,
-      "temperatureDiff": -0.7,
+      "temperature": 25.9,
+      "temperatureDiff": 0.3,
       "airpressure": 9999,
-      "humidity": 63,
+      "humidity": 65,
       "rain": 0,
       "rcomfort": 70,
       "icomfort": 1,
       "info": "晴",
       "img": "0",
-      "feelst": 28.2
+      "feelst": 28.3
     },
     "wind": {
       "direct": "东南风",
-      "degree": 136,
+      "degree": 132,
       "power": "微风",
-      "speed": 2
+      "speed": 1.6
     },
     "warn": {
       "alert": "9999",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-10-28 20:00",
-    "aqi": 48,
+    "forecasttime": "2026-10-28 21:00",
+    "aqi": 50,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 26,
+      "tempDiff": "",
+      "humidity": 64,
+      "pressure": 1013,
+      "windDirection": 138,
+      "windSpeed": 3.4,
+      "time": "2026-10-28 21:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 80,
       "windSpeed": 2.9,
       "time": "2026-10-27 22:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 26.8,
-      "tempDiff": "",
-      "humidity": 55,
-      "pressure": 1013,
-      "windDirection": 6,
-      "windSpeed": 1.8,
-      "time": "2026-10-27 21:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/28/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261028131200000.PNG?v=1793193913839",
+    "image": "/product/2026/10/28/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261028140000000.PNG?v=1793196802111",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-28 20:00",
-    "aqi": 48,
+    "forecasttime": "2026-10-28 21:00",
+    "aqi": 50,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
