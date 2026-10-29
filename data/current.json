@@ -6,10 +6,10 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-29 18:40",
+    "publish_time": "2026-10-29 19:30",
     "weather": {
-      "temperature": 27.1,
-      "temperatureDiff": 0.6,
+      "temperature": 27,
+      "temperatureDiff": 0.9,
       "airpressure": 9999,
       "humidity": 67,
       "rain": 0,
@@ -17,7 +17,7 @@
       "icomfort": 2,
       "info": "-",
       "img": "9999",
-      "feelst": 31.1
+      "feelst": 31
     },
     "wind": {
       "direct": "9999",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-10-29 18:00",
-    "aqi": 51,
+    "forecasttime": "2026-10-29 19:00",
+    "aqi": 57,
     "aq": 2,
     "text": "良",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 27.2,
+      "tempDiff": "",
+      "humidity": 67,
+      "pressure": 1011,
+      "windDirection": 26,
+      "windSpeed": 0.9,
+      "time": "2026-10-29 19:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 181,
       "windSpeed": 1.8,
       "time": "2026-10-28 20:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 26.3,
-      "tempDiff": "",
-      "humidity": 65,
-      "pressure": 1012,
-      "windDirection": 174,
-      "windSpeed": 2.3,
-      "time": "2026-10-28 19:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/29/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261029105400000.PNG?v=1793271872224",
+    "image": "/product/2026/10/29/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261029114800000.PNG?v=1793275277476",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-29 18:00",
-    "aqi": 51,
+    "forecasttime": "2026-10-29 19:00",
+    "aqi": 57,
     "aq": 2,
     "text": "良",
     "aqiCode": ""
