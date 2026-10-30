@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-30 09:55",
+    "publish_time": "2026-10-30 10:55",
     "weather": {
-      "temperature": 28,
-      "temperatureDiff": 2.5,
+      "temperature": 28.4,
+      "temperatureDiff": 1.7,
       "airpressure": 9999,
-      "humidity": 67,
+      "humidity": 65,
       "rain": 0,
-      "rcomfort": 73,
+      "rcomfort": 74,
       "icomfort": 1,
       "info": "-",
       "img": "9999",
-      "feelst": 31.1
+      "feelst": 31.9
     },
     "wind": {
-      "direct": "东南风",
-      "degree": 104,
+      "direct": "东北风",
+      "degree": 85,
       "power": "微风",
-      "speed": 1.8
+      "speed": 1.3
     },
     "warn": {
       "alert": "9999",
@@ -50,11 +50,11 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-30 08:00",
+    "publish_time": "2026-10-30 12:00",
     "detail": [
       {
         "date": "2026-10-30",
-        "pt": "2026-10-30 08:00",
+        "pt": "2026-10-30 12:00",
         "day": {
           "weather": {
             "info": "多云",
@@ -81,7 +81,7 @@
       },
       {
         "date": "2026-10-31",
-        "pt": "2026-10-30 08:00",
+        "pt": "2026-10-30 12:00",
         "day": {
           "weather": {
             "info": "多云",
@@ -108,7 +108,7 @@
       },
       {
         "date": "2026-11-01",
-        "pt": "2026-10-30 08:00",
+        "pt": "2026-10-30 12:00",
         "day": {
           "weather": {
             "info": "多云",
@@ -135,7 +135,7 @@
       },
       {
         "date": "2026-11-02",
-        "pt": "2026-10-30 08:00",
+        "pt": "2026-10-30 12:00",
         "day": {
           "weather": {
             "info": "多云",
@@ -162,7 +162,7 @@
       },
       {
         "date": "2026-11-03",
-        "pt": "2026-10-30 08:00",
+        "pt": "2026-10-30 12:00",
         "day": {
           "weather": {
             "info": "多云",
@@ -189,7 +189,7 @@
       },
       {
         "date": "2026-11-04",
-        "pt": "2026-10-30 08:00",
+        "pt": "2026-10-30 12:00",
         "day": {
           "weather": {
             "info": "多云",
@@ -216,11 +216,11 @@
       },
       {
         "date": "2026-11-05",
-        "pt": "2026-10-30 08:00",
+        "pt": "2026-10-30 12:00",
         "day": {
           "weather": {
-            "info": "小雨",
-            "img": "7",
+            "info": "多云",
+            "img": "1",
             "temperature": "29"
           },
           "wind": {
@@ -230,22 +230,22 @@
         },
         "night": {
           "weather": {
-            "info": "晴",
-            "img": "0",
-            "temperature": "22"
+            "info": "多云",
+            "img": "1",
+            "temperature": "23"
           },
           "wind": {
             "direct": "无持续风向",
             "power": "微风"
           }
         },
-        "precipitation": 10
+        "precipitation": 0
       }
     ]
   },
   "air": {
-    "forecasttime": "2026-10-30 09:00",
-    "aqi": 82,
+    "forecasttime": "2026-10-30 10:00",
+    "aqi": 96,
     "aq": 2,
     "text": "良",
     "aqiCode": "99092"
@@ -370,15 +370,28 @@
     },
     {
       "time": "2026/11/05",
-      "max_temp": 29.9,
-      "min_temp": 22.5,
-      "day_img": "7",
-      "day_text": "小雨",
-      "night_img": "0",
-      "night_text": "晴"
+      "max_temp": 29.1,
+      "min_temp": 23.7,
+      "day_img": "1",
+      "day_text": "多云",
+      "night_img": "1",
+      "night_text": "多云"
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 27.8,
+      "tempDiff": "",
+      "humidity": 66,
+      "pressure": 1014,
+      "windDirection": 134,
+      "windSpeed": 0.9,
+      "time": "2026-10-30 10:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 49,
       "windSpeed": 2.5,
       "time": "2026-10-29 11:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 25.5,
-      "tempDiff": "",
-      "humidity": 67,
-      "pressure": 1016,
-      "windDirection": 79,
-      "windSpeed": 1.9,
-      "time": "2026-10-29 10:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/30/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261030021800000.PNG?v=1793327326035",
+    "image": "/product/2026/10/30/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261030031800000.PNG?v=1793330911912",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-30 09:00",
-    "aqi": 82,
+    "forecasttime": "2026-10-30 10:00",
+    "aqi": 96,
     "aq": 2,
     "text": "良",
     "aqiCode": ""
