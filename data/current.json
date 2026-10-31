@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-01 03:20",
+    "publish_time": "2026-11-01 03:45",
     "weather": {
-      "temperature": 23.8,
-      "temperatureDiff": -0.4,
+      "temperature": 23.7,
+      "temperatureDiff": -0.3,
       "airpressure": 9999,
-      "humidity": 80,
+      "humidity": 81,
       "rain": 0,
-      "rcomfort": 70,
-      "icomfort": 1,
+      "rcomfort": 68,
+      "icomfort": 0,
       "info": "-",
       "img": "9999",
-      "feelst": 27.1
+      "feelst": 26.4
     },
     "wind": {
       "direct": "东北风",
-      "degree": 25,
+      "degree": 69,
       "power": "微风",
-      "speed": 0.6
+      "speed": 1.6
     },
     "warn": {
       "alert": "9999",
@@ -771,7 +771,7 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/31/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261031193600000.PNG?v=1793476171426",
+    "image": "/product/2026/10/31/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261031200000000.PNG?v=1793477608314",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
