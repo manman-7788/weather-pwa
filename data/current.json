@@ -6,22 +6,22 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-10-31 18:45",
+    "publish_time": "2026-10-31 19:20",
     "weather": {
-      "temperature": 26.7,
-      "temperatureDiff": -1.3,
+      "temperature": 26.4,
+      "temperatureDiff": -1.2,
       "airpressure": 9999,
-      "humidity": 59,
+      "humidity": 62,
       "rain": 0,
       "rcomfort": 70,
       "icomfort": 1,
       "info": "-",
       "img": "9999",
-      "feelst": 28.7
+      "feelst": 28.5
     },
     "wind": {
       "direct": "东南风",
-      "degree": 137,
+      "degree": 133,
       "power": "微风",
       "speed": 2
     },
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-10-31 18:00",
-    "aqi": 39,
+    "forecasttime": "2026-10-31 19:00",
+    "aqi": 32,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 26.6,
+      "tempDiff": "",
+      "humidity": 60,
+      "pressure": 1010,
+      "windDirection": 132,
+      "windSpeed": 1.3,
+      "time": "2026-10-31 19:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 58,
       "windSpeed": 0.8,
       "time": "2026-10-30 20:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 27.8,
-      "tempDiff": "",
-      "humidity": 61,
-      "pressure": 1011,
-      "windDirection": 72,
-      "windSpeed": 0.8,
-      "time": "2026-10-30 19:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/10/31/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261031110600000.PNG?v=1793445563678",
+    "image": "/product/2026/10/31/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261031114200000.PNG?v=1793447716658",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-10-31 18:00",
-    "aqi": 39,
+    "forecasttime": "2026-10-31 19:00",
+    "aqi": 32,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
