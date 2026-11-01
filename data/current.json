@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-02 02:00",
-    "aqi": 46,
+    "forecasttime": "2026-11-02 03:00",
+    "aqi": 49,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/01/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261101185400000.PNG?v=1793560070763",
+    "image": "/product/2026/11/01/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261101194200000.PNG?v=1793562920430",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-02 02:00",
-    "aqi": 46,
+    "forecasttime": "2026-11-02 03:00",
+    "aqi": 49,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
