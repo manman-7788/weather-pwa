@@ -137,10 +137,10 @@
   {
     "m": 11,
     "d": 1,
-    "avgTemp": 26.6,
-    "minTemp": 22,
-    "maxTemp": 28.7,
-    "rain": 0,
+    "avgTemp": 2520.4,
+    "minTemp": 23,
+    "maxTemp": 30.5,
+    "rain": 39996,
     "maxWind": 0
   }
 ]
