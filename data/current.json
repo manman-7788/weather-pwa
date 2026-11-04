@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-05 05:00",
+    "publish_time": "2026-11-05 06:00",
     "weather": {
-      "temperature": 23.9,
-      "temperatureDiff": -0.4,
+      "temperature": 24.1,
+      "temperatureDiff": -0.5,
       "airpressure": 1010,
-      "humidity": 90,
+      "humidity": 88,
       "rain": 0,
-      "rcomfort": 69,
-      "icomfort": 0,
+      "rcomfort": 70,
+      "icomfort": 1,
       "info": "-",
       "img": "9999",
-      "feelst": 26.8
+      "feelst": 27.6
     },
     "wind": {
-      "direct": "东南风",
-      "degree": 102,
+      "direct": "东北风",
+      "degree": 57,
       "power": "微风",
-      "speed": 2.2
+      "speed": 1.2
     },
     "warn": {
       "alert": "9999",
@@ -384,6 +384,19 @@
       "rain24h": 9999,
       "rain12h": 9999,
       "rain6h": 9999,
+      "temperature": 23.9,
+      "tempDiff": "",
+      "humidity": 90,
+      "pressure": 1010,
+      "windDirection": 101,
+      "windSpeed": 2.7,
+      "time": "2026-11-05 05:00"
+    },
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
       "temperature": 24.4,
       "tempDiff": "",
       "humidity": 88,
@@ -677,19 +690,6 @@
       "windDirection": 52,
       "windSpeed": 1.5,
       "time": "2026-11-04 06:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 24.3,
-      "tempDiff": "",
-      "humidity": 86,
-      "pressure": 1009,
-      "windDirection": 9999,
-      "windSpeed": 0,
-      "time": "2026-11-04 05:00"
     }
   ],
   "climate": {
@@ -771,7 +771,7 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/04/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261104211800000.PNG?v=1793827874036",
+    "image": "/product/2026/11/04/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261104221800000.PNG?v=1793831476582",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
