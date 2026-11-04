@@ -165,8 +165,8 @@
     "m": 11,
     "d": 4,
     "avgTemp": 25.9,
-    "minTemp": 23.3,
-    "maxTemp": 28.7,
+    "minTemp": 24.3,
+    "maxTemp": 30,
     "rain": 1.2,
     "maxWind": 0
   }
