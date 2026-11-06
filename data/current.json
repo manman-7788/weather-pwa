@@ -6,37 +6,37 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-06 18:20",
+    "publish_time": "2026-11-06 19:10",
     "weather": {
-      "temperature": 25.5,
-      "temperatureDiff": -2.2,
+      "temperature": 25.4,
+      "temperatureDiff": -1.8,
       "airpressure": 9999,
-      "humidity": 92,
-      "rain": 0.8,
+      "humidity": 93,
+      "rain": 0.1,
       "rcomfort": 73,
       "icomfort": 1,
       "info": "小雨",
       "img": "7",
-      "feelst": 29.9
+      "feelst": 29.5
     },
     "wind": {
-      "direct": "东北风",
-      "degree": 15,
+      "direct": "东南风",
+      "degree": 97,
       "power": "微风",
-      "speed": 1
+      "speed": 1.5
     },
     "warn": {
-      "alert": "2026年11月06日17时广东省东莞市气象台发布暴雨黄色预警信号",
-      "pic": "https://image.nmc.cn/assets/img/alarm/p0002003.png",
+      "alert": "2026年11月06日19时广东省东莞市气象台发布暴雨橙色预警信号",
+      "pic": "https://image.nmc.cn/assets/img/alarm/p0002002.png",
       "province": "广东省",
       "city": "东莞市",
-      "url": "/publish/alarm/44190041600000_20261106175451.html",
-      "issuecontent": "【东莞分镇暴雨黄色预警扩展】预计未来1—2小时，我市麻涌、沙田、洪梅强雷雨持续，东莞市气象台于11月6日17时50分将分镇暴雨黄色预警信号扩展至上述镇街，请注意防御。",
+      "url": "/publish/alarm/44190041600000_20261106191356.html",
+      "issuecontent": "【东莞解除石龙暴雨黄色预警】过去2小时，我市北部和西部出现了强降雨，全市共5个镇街雨量超50毫米，最大降水为沙田的87.9毫米，其次为麻涌的67.8毫米、石龙的62.4毫米。目前石龙降雨已减弱，东莞市气象台于11月6日19时10分解除石龙暴雨黄色预警信号。预计未来1小时，西北部镇街强降雨持续，洪梅暴雨黄色和麻涌、沙田暴雨橙色预警信号仍在生效中，请继续做好防御。",
       "issuetime": "",
-      "fmeans": "1.政府及相关部门按照职责做好防暴雨工作；2.交通管理部门应当根据路况在强降雨路段采取交通管制措施，在积水路段实行交通引导；3.切断低洼地带有危险的室外电源，暂停在空旷地方的户外作业，转移危险地带人员和危房居民到安全场所避雨；4.检查城市、农田、鱼塘排水系统，采取必要的排涝措施。",
+      "fmeans": "1.政府及相关部门按照职责做好防暴雨应急工作；2.切断有危险的室外电源，暂停户外作业；3.处于危险地带的单位应当停课、停业，采取专门措施保护已到校学生、幼儿和其他上班人员的安全；4.做好城市、农田的排涝，注意防范可能引发的山洪、滑坡、泥石流等灾害。",
       "signaltype": "暴雨",
-      "signallevel": "黄色",
-      "pic2": "p0002003.png"
+      "signallevel": "橙色",
+      "pic2": "p0002002.png"
     },
     "sunriseSunset": {
       "sunrise": "2026-11-06 06:32",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-06 17:00",
-    "aqi": 70,
+    "forecasttime": "2026-11-06 18:00",
+    "aqi": 72,
     "aq": 2,
     "text": "良",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0.1,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 25.4,
+      "tempDiff": "",
+      "humidity": 93,
+      "pressure": 1011,
+      "windDirection": 78,
+      "windSpeed": 1.4,
+      "time": "2026-11-06 19:00"
+    },
     {
       "rain1h": 0.8,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 182,
       "windSpeed": 2.3,
       "time": "2026-11-05 20:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 27.1,
-      "tempDiff": "",
-      "humidity": 78,
-      "pressure": 1009,
-      "windDirection": 348,
-      "windSpeed": 2,
-      "time": "2026-11-05 19:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/06/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261106103000000.PNG?v=1793961794217",
+    "image": "/product/2026/11/06/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261106112400000.PNG?v=1793965040069",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-06 17:00",
-    "aqi": 70,
+    "forecasttime": "2026-11-06 18:00",
+    "aqi": 72,
     "aq": 2,
     "text": "良",
     "aqiCode": ""
