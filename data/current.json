@@ -6,12 +6,12 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-08 02:45",
+    "publish_time": "2026-11-08 03:30",
     "weather": {
-      "temperature": 24.6,
-      "temperatureDiff": 0.5,
+      "temperature": 24.3,
+      "temperatureDiff": 0.2,
       "airpressure": 9999,
-      "humidity": 82,
+      "humidity": 83,
       "rain": 0,
       "rcomfort": 68,
       "icomfort": 0,
@@ -22,8 +22,8 @@
     "wind": {
       "direct": "东北风",
       "degree": 76,
-      "power": "3级",
-      "speed": 3.6
+      "power": "微风",
+      "speed": 3.1
     },
     "warn": {
       "alert": "9999",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-08 02:00",
-    "aqi": 37,
+    "forecasttime": "2026-11-08 03:00",
+    "aqi": 33,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 24.5,
+      "tempDiff": "",
+      "humidity": 82,
+      "pressure": 1014,
+      "windDirection": 71,
+      "windSpeed": 4.3,
+      "time": "2026-11-08 03:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 69,
       "windSpeed": 2.5,
       "time": "2026-11-07 04:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 24.1,
-      "tempDiff": "",
-      "humidity": 88,
-      "pressure": 1011,
-      "windDirection": 76,
-      "windSpeed": 4.1,
-      "time": "2026-11-07 03:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/07/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261107190000000.PNG?v=1794078647949",
+    "image": "/product/2026/11/07/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261107194200000.PNG?v=1794081321531",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-08 02:00",
-    "aqi": 37,
+    "forecasttime": "2026-11-08 03:00",
+    "aqi": 33,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
