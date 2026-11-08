@@ -6,37 +6,37 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-08 23:50",
+    "publish_time": "2026-11-09 00:30",
     "weather": {
-      "temperature": 24.7,
-      "temperatureDiff": -0.3,
+      "temperature": 21.9,
+      "temperatureDiff": -2.7,
       "airpressure": 9999,
-      "humidity": 79,
-      "rain": 0,
-      "rcomfort": 68,
+      "humidity": 88,
+      "rain": 3.3,
+      "rcomfort": 66,
       "icomfort": 0,
-      "info": "-",
-      "img": "9999",
-      "feelst": 26.8
+      "info": "中雨",
+      "img": "8",
+      "feelst": 24.4
     },
     "wind": {
-      "direct": "西北风",
-      "degree": 329,
+      "direct": "西南风",
+      "degree": 186,
       "power": "微风",
-      "speed": 2.8
+      "speed": 1.5
     },
     "warn": {
-      "alert": "9999",
-      "pic": "9999",
-      "province": "9999",
-      "city": "9999",
-      "url": "9999",
-      "issuecontent": "9999",
+      "alert": "2026年11月09日00时广东省东莞市气象台发布暴雨橙色预警信号",
+      "pic": "https://image.nmc.cn/assets/img/alarm/p0002002.png",
+      "province": "广东省",
+      "city": "东莞市",
+      "url": "/publish/alarm/44190041600000_20261109003604.html",
+      "issuecontent": "【东莞南城暴雨橙色预警】目前南城已出现强降雨，预计未来1到2小时强降雨持续，东莞市气象台11月9日00时35分将南城暴雨黄色预警信号升级为橙色，请注意防御。",
       "issuetime": "",
-      "fmeans": "9999",
-      "signaltype": "9999",
-      "signallevel": "9999",
-      "pic2": "9999"
+      "fmeans": "1.政府及相关部门按照职责做好防暴雨应急工作；2.切断有危险的室外电源，暂停户外作业；3.处于危险地带的单位应当停课、停业，采取专门措施保护已到校学生、幼儿和其他上班人员的安全；4.做好城市、农田的排涝，注意防范可能引发的山洪、滑坡、泥石流等灾害。",
+      "signaltype": "暴雨",
+      "signallevel": "橙色",
+      "pic2": "p0002002.png"
     },
     "sunriseSunset": {
       "sunrise": "2026-11-09 06:34",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-08 23:00",
-    "aqi": 37,
+    "forecasttime": "2026-11-09 00:00",
+    "aqi": 38,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 3.3,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 23.1,
+      "tempDiff": "",
+      "humidity": 82,
+      "pressure": 1017,
+      "windDirection": 333,
+      "windSpeed": 2.8,
+      "time": "2026-11-09 00:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 76,
       "windSpeed": 2.7,
       "time": "2026-11-08 01:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 25,
-      "tempDiff": "",
-      "humidity": 84,
-      "pressure": 1015,
-      "windDirection": 59,
-      "windSpeed": 2.5,
-      "time": "2026-11-08 00:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/08/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261108160600000.PNG?v=1794154747824",
+    "image": "/product/2026/11/08/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261108164800000.PNG?v=1794157107289",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-08 23:00",
-    "aqi": 37,
+    "forecasttime": "2026-11-09 00:00",
+    "aqi": 38,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
