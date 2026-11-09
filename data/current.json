@@ -6,24 +6,24 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-09 22:30",
+    "publish_time": "2026-11-09 23:45",
     "weather": {
-      "temperature": 18.5,
-      "temperatureDiff": -8.3,
+      "temperature": 17.6,
+      "temperatureDiff": -7.5,
       "airpressure": 9999,
-      "humidity": 45,
+      "humidity": 43,
       "rain": 0,
-      "rcomfort": 57,
+      "rcomfort": 55,
       "icomfort": -1,
       "info": "-",
       "img": "9999",
-      "feelst": 17.1
+      "feelst": 15.6
     },
     "wind": {
       "direct": "东北风",
-      "degree": 9,
-      "power": "微风",
-      "speed": 2.9
+      "degree": 18,
+      "power": "3级",
+      "speed": 3.5
     },
     "warn": {
       "alert": "9999",
@@ -39,8 +39,8 @@
       "pic2": "9999"
     },
     "sunriseSunset": {
-      "sunrise": "2026-11-09 06:34",
-      "sunset": "2026-11-09 17:43"
+      "sunrise": "2026-11-10 06:35",
+      "sunset": "2026-11-10 17:42"
     }
   },
   "predict": {
@@ -244,7 +244,7 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-09 22:00",
+    "forecasttime": "2026-11-09 23:00",
     "aqi": 28,
     "aq": 1,
     "text": "优",
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 18.3,
+      "tempDiff": "",
+      "humidity": 43,
+      "pressure": 1021,
+      "windDirection": 23,
+      "windSpeed": 7.8,
+      "time": "2026-11-09 23:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 333,
       "windSpeed": 2.8,
       "time": "2026-11-09 00:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 26.9,
-      "tempDiff": "",
-      "humidity": 73,
-      "pressure": 1016,
-      "windDirection": 330,
-      "windSpeed": 7.7,
-      "time": "2026-11-08 23:00"
     }
   ],
   "climate": {
@@ -771,11 +771,11 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/09/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261109150600000.PNG?v=1794237404569",
+    "image": "/product/2026/11/09/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261109161200000.PNG?v=1794241525648",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-09 22:00",
+    "forecasttime": "2026-11-09 23:00",
     "aqi": 28,
     "aq": 1,
     "text": "优",
