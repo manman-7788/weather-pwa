@@ -209,10 +209,10 @@
   {
     "m": 11,
     "d": 9,
-    "avgTemp": 21.8,
+    "avgTemp": 20.1,
     "minTemp": 23.9,
     "maxTemp": 31.7,
-    "rain": 31.1,
+    "rain": 0,
     "maxWind": 0
   }
 ]
