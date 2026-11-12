@@ -6,14 +6,14 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-12 18:55",
+    "publish_time": "2026-11-12 19:45",
     "weather": {
-      "temperature": 23.6,
-      "temperatureDiff": 2.9,
+      "temperature": 23.4,
+      "temperatureDiff": 3.4,
       "airpressure": 9999,
-      "humidity": 61,
+      "humidity": 65,
       "rain": 0,
-      "rcomfort": 70,
+      "rcomfort": 71,
       "icomfort": 1,
       "info": "-",
       "img": "9999",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-12 18:00",
-    "aqi": 41,
+    "forecasttime": "2026-11-12 19:00",
+    "aqi": 38,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 0,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 23.5,
+      "tempDiff": "",
+      "humidity": 62,
+      "pressure": 1013,
+      "windDirection": 9999,
+      "windSpeed": 0,
+      "time": "2026-11-12 19:00"
+    },
     {
       "rain1h": 0,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 81,
       "windSpeed": 1,
       "time": "2026-11-11 20:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 20.8,
-      "tempDiff": "",
-      "humidity": 50,
-      "pressure": 1014,
-      "windDirection": 9999,
-      "windSpeed": 0,
-      "time": "2026-11-11 19:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/12/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261112110600000.PNG?v=1794482352219",
+    "image": "/product/2026/11/12/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261112120000000.PNG?v=1794485603930",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-12 18:00",
-    "aqi": 41,
+    "forecasttime": "2026-11-12 19:00",
+    "aqi": 38,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
