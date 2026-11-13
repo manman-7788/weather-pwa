@@ -6,37 +6,37 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-14 01:00",
+    "publish_time": "2026-11-14 02:05",
     "weather": {
-      "temperature": 21.2,
-      "temperatureDiff": 0.3,
-      "airpressure": 1008,
+      "temperature": 20.9,
+      "temperatureDiff": -0.1,
+      "airpressure": 9999,
       "humidity": 94,
-      "rain": 0.4,
-      "rcomfort": 64,
+      "rain": 1.9,
+      "rcomfort": 66,
       "icomfort": 0,
-      "info": "小雨",
-      "img": "7",
-      "feelst": 23.1
+      "info": "中雨",
+      "img": "8",
+      "feelst": 24
     },
     "wind": {
       "direct": "东北风",
-      "degree": 60,
+      "degree": 51,
       "power": "微风",
-      "speed": 2.5
+      "speed": 0.5
     },
     "warn": {
-      "alert": "9999",
-      "pic": "9999",
-      "province": "9999",
-      "city": "9999",
-      "url": "9999",
-      "issuecontent": "9999",
+      "alert": "2026年11月14日02时广东省东莞市气象台发布暴雨黄色预警信号",
+      "pic": "https://image.nmc.cn/assets/img/alarm/p0002003.png",
+      "province": "广东省",
+      "city": "东莞市",
+      "url": "/publish/alarm/44190041600000_20261114022348.html",
+      "issuecontent": "【东莞暴雨黄色预警】预计未来6小时，我市有持续性降雨，累积雨量有大雨到暴雨，东莞市气象台11月14日02时22分对全市发布暴雨黄色预警信号，请注意防御。",
       "issuetime": "",
-      "fmeans": "9999",
-      "signaltype": "9999",
-      "signallevel": "9999",
-      "pic2": "9999"
+      "fmeans": "1.政府及相关部门按照职责做好防暴雨工作；2.交通管理部门应当根据路况在强降雨路段采取交通管制措施，在积水路段实行交通引导；3.切断低洼地带有危险的室外电源，暂停在空旷地方的户外作业，转移危险地带人员和危房居民到安全场所避雨；4.检查城市、农田、鱼塘排水系统，采取必要的排涝措施。",
+      "signaltype": "暴雨",
+      "signallevel": "黄色",
+      "pic2": "p0002003.png"
     },
     "sunriseSunset": {
       "sunrise": "2026-11-14 06:37",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-14 00:00",
-    "aqi": 46,
+    "forecasttime": "2026-11-14 01:00",
+    "aqi": 42,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/13/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261113172400000.PNG?v=1794591274047",
+    "image": "/product/2026/11/13/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261113181800000.PNG?v=1794594498071",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-14 00:00",
-    "aqi": 46,
+    "forecasttime": "2026-11-14 01:00",
+    "aqi": 42,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
