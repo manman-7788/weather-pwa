@@ -6,32 +6,32 @@
       "city": "东莞",
       "url": "/publish/forecast/AGD/dongzuo.html"
     },
-    "publish_time": "2026-11-14 03:10",
+    "publish_time": "2026-11-14 04:10",
     "weather": {
       "temperature": 20.7,
       "temperatureDiff": -0.2,
       "airpressure": 9999,
-      "humidity": 95,
-      "rain": 3.9,
-      "rcomfort": 63,
+      "humidity": 94,
+      "rain": 2.9,
+      "rcomfort": 64,
       "icomfort": 0,
       "info": "中雨",
       "img": "8",
-      "feelst": 22.3
+      "feelst": 23.1
     },
     "wind": {
-      "direct": "东北风",
-      "degree": 60,
+      "direct": "西北风",
+      "degree": 359,
       "power": "微风",
-      "speed": 2.8
+      "speed": 1.5
     },
     "warn": {
-      "alert": "2026年11月14日02时广东省东莞市气象台发布暴雨黄色预警信号",
+      "alert": "2026年11月14日04时广东省东莞市气象台发布暴雨黄色预警信号",
       "pic": "https://image.nmc.cn/assets/img/alarm/p0002003.png",
       "province": "广东省",
       "city": "东莞市",
-      "url": "/publish/alarm/44190041600000_20261114022348.html",
-      "issuecontent": "【东莞暴雨黄色预警】预计未来6小时，我市有持续性降雨，累积雨量有大雨到暴雨，东莞市气象台11月14日02时22分对全市发布暴雨黄色预警信号，请注意防御。",
+      "url": "/publish/alarm/44190041600000_20261114041624.html",
+      "issuecontent": "【东莞解除部分镇街暴雨黄色预警】预计未来1小时我市东部和南部镇街仍有持续性降雨，西北部镇街有分散小雨，东莞市气象台11月14日04时12分解除万江、东城、中堂、南城、厚街、望牛墩、沙田、洪梅、生态园、石排、石碣、石龙、茶山、莞城、道滘、高埗、麻涌暴雨黄色预警信号，其余镇街暴雨黄色预警信号仍在生效中，请继续做好防御。",
       "issuetime": "",
       "fmeans": "1.政府及相关部门按照职责做好防暴雨工作；2.交通管理部门应当根据路况在强降雨路段采取交通管制措施，在积水路段实行交通引导；3.切断低洼地带有危险的室外电源，暂停在空旷地方的户外作业，转移危险地带人员和危房居民到安全场所避雨；4.检查城市、农田、鱼塘排水系统，采取必要的排涝措施。",
       "signaltype": "暴雨",
@@ -244,8 +244,8 @@
     ]
   },
   "air": {
-    "forecasttime": "2026-11-14 02:00",
-    "aqi": 36,
+    "forecasttime": "2026-11-14 03:00",
+    "aqi": 29,
     "aq": 1,
     "text": "优",
     "aqiCode": "99092"
@@ -379,6 +379,19 @@
     }
   ],
   "passedchart": [
+    {
+      "rain1h": 2.9,
+      "rain24h": 9999,
+      "rain12h": 9999,
+      "rain6h": 9999,
+      "temperature": 20.7,
+      "tempDiff": "",
+      "humidity": 95,
+      "pressure": 1007,
+      "windDirection": 349,
+      "windSpeed": 2.1,
+      "time": "2026-11-14 04:00"
+    },
     {
       "rain1h": 3.9,
       "rain24h": 9999,
@@ -677,19 +690,6 @@
       "windDirection": 69,
       "windSpeed": 2.4,
       "time": "2026-11-13 05:00"
-    },
-    {
-      "rain1h": 0,
-      "rain24h": 9999,
-      "rain12h": 9999,
-      "rain6h": 9999,
-      "temperature": 20.6,
-      "tempDiff": "",
-      "humidity": 81,
-      "pressure": 1012,
-      "windDirection": 72,
-      "windSpeed": 2.9,
-      "time": "2026-11-13 04:00"
     }
   ],
   "climate": {
@@ -771,12 +771,12 @@
   },
   "radar": {
     "title": "华南",
-    "image": "/product/2026/11/13/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261113192400000.PNG?v=1794598645537",
+    "image": "/product/2026/11/13/RDCP/SEVP_AOC_RDCP_SLDAS3_ECREF_ASCN_L88_PI_20261113202400000.PNG?v=1794602235855",
     "url": "/publish/radar/huanan.html"
   },
   "aqi": {
-    "forecasttime": "2026-11-14 02:00",
-    "aqi": 36,
+    "forecasttime": "2026-11-14 03:00",
+    "aqi": 29,
     "aq": 1,
     "text": "优",
     "aqiCode": ""
