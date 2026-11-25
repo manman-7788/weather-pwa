@@ -353,10 +353,10 @@
   {
     "m": 11,
     "d": 25,
-    "avgTemp": 16.9,
+    "avgTemp": 15.6,
     "minTemp": 18.5,
     "maxTemp": 25.9,
-    "rain": 0.1,
+    "rain": 0.9,
     "maxWind": 0
   }
 ]
